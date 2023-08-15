@@ -1,13 +1,13 @@
 import { ReactNode } from 'react';
 import { DesktopNavbar } from '../components/navbar/desktopNavbar';
 
-type DesktopLayoutType = {
+type LayoutType = {
   children: ReactNode;
 };
 
-export function DesktopLayout({ children }: DesktopLayoutType) {
+export function Layout({ children }: LayoutType) {
   return (
-    <section className='bg-background-300'>
+    <section className='bg-gray-200'>
       <section className='container min-h-screen'>
         <DesktopNavbar />
         {children}

@@ -7,7 +7,7 @@ export function DesktopNavbar() {
   const router = useLocation();
   const navigate = useNavigate();
   return (
-    <nav className='between-y py-3 sticky top-0 bg-background-300'>
+    <nav className='between-y py-3 sticky top-0 bg-gray-200'>
       {/* -------- logo -------- */}
       <h3
         onClick={() => navigate('/')}
@@ -27,7 +27,10 @@ export function DesktopNavbar() {
             currentPath={router.pathname}
           />
         ))}
-        <button className='button bg-blue-600 text-white rounded-md animation hover:bg-blue-800'>
+        <button
+          onClick={() => navigate('/login')}
+          className='button bg-blue-600 text-white rounded-md animation hover:bg-blue-800'
+        >
           Login
         </button>
       </ul>
