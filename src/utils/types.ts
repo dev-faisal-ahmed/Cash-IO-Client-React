@@ -1,6 +1,6 @@
 export type UserInfoType = {
-  userName: string | null;
-  userEmail: string | null;
+  name: string | null;
+  email: string | null;
   imageUrl: string | null;
   login: boolean;
 };

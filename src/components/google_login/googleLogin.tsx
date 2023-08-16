@@ -15,8 +15,8 @@ export function GoogleLogin() {
       .then((result) => {
         const user = result.user;
         const payLoad = {
-          userName: user.displayName,
-          userEmail: user.email,
+          name: user.displayName,
+          email: user.email,
           imageUrl: user.photoURL,
         };
         dispatch(login(payLoad));

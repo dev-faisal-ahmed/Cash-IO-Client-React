@@ -20,16 +20,14 @@ export function NavMenu() {
     <div className='relative'>
       {/* profile Icon */}
       <div onClick={() => setShowMenu(!showMenu)}>
-        <ProfileIcon imageUrl={user.imageUrl} userName={user.userName} />
+        <ProfileIcon imageUrl={user.imageUrl} userName={user.name} />
       </div>
       {/* menu */}
       {showMenu && (
-        <div className='absolute right-0 top-12 rounded-md bg-white p-4'>
+        <div className='absolute right-0 top-12 min-w-[180px] rounded-md bg-white p-4'>
           <p className='mb-3 font-semibold'>
-            {user.userName}
-            <span className='block text-xs text-gray-500'>
-              {user.userEmail}
-            </span>
+            {user.name}
+            <span className='block text-xs text-gray-500'>{user.email}</span>
           </p>
           <hr />
           <button

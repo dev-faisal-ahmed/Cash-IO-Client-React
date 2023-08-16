@@ -14,11 +14,12 @@ export function LoginInput({ title, type, icon, name }: LoginInputType) {
         {icon}
       </label>
       <input
-        className='bg-transparent outline-none'
+        className='w-full bg-transparent outline-none'
         id={name}
         name={name}
         placeholder={title}
         type={type}
+        required
       />
     </div>
   );
