@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 export function SingUpPage() {
   const router = useNavigate();
-  console.log(import.meta.env.VITE_name);
+
   return (
     <section className='min-h-screen bg-gray-200 center-xy p-5'>
       <div className='sm:bg-white bg-transparent sm:shadow-md sm:w-[450px] w-full px-5 py-10 sm:p-12 rounded-3xl'>

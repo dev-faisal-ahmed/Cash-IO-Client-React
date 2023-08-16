@@ -2,16 +2,25 @@ import { FcGoogle } from 'react-icons/fc';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../utils/firebaseInit';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../utils/stores/userReducer';
 
 export function GoogleLogin() {
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function handleGoogleLogin() {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        const payLoad = {
+          userName: user.displayName,
+          userEmail: user.email,
+          imageUrl: user.photoURL,
+        };
+        dispatch(login(payLoad));
+
         navigate('/');
       })
       .catch((err) => console.error(err));
