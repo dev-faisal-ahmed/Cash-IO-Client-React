@@ -15,8 +15,14 @@ export const userSlice = createSlice({
       state.imageUrl = action.payload.imageUrl;
       state.login = true;
     },
+    logout: function (state) {
+      state.userName = '';
+      state.userEmail = '';
+      state.imageUrl = '';
+      state.login = false;
+    },
   },
 });
 
-export const { login } = userSlice.actions;
+export const { login, logout } = userSlice.actions;
 export const userReducer = userSlice.reducer;

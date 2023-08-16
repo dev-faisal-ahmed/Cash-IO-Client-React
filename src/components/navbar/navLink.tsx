@@ -12,7 +12,7 @@ export function NavLink({ title, url, currentPath }: NavLinkType) {
     <Link
       to={url}
       className={twMerge(
-        `hover:bg-background-800 animation rounded-md py-2 hover:text-white ${
+        `animation rounded-md py-2 hover:bg-gray-500 hover:px-5 hover:text-white ${
           currentPath === url
             ? 'bg-blue-100 px-5 font-semibold text-blue-500'
             : 'text-gray-500'

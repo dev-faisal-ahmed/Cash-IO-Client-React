@@ -4,13 +4,12 @@ import { navLinks } from '../../data/navLinks';
 import { NavLink } from './navLink';
 import { useSelector } from 'react-redux';
 import { StoreType } from '../../utils/types';
+import { NavMenu } from './navMenu';
 
 export function DesktopNavbar() {
   const router = useLocation();
   const navigate = useNavigate();
   const user = useSelector((store: StoreType) => store.user);
-
-  console.log(user);
 
   return (
     <nav className='between-y sticky top-0 bg-gray-200 py-3'>
@@ -33,12 +32,16 @@ export function DesktopNavbar() {
             currentPath={router.pathname}
           />
         ))}
-        <button
-          onClick={() => navigate('/login')}
-          className='button animation rounded-md bg-blue-600 text-white hover:bg-blue-800'
-        >
-          {user.login ? 'Logout' : 'Login'}
-        </button>
+        {user.login ? (
+          <NavMenu />
+        ) : (
+          <button
+            onClick={() => navigate('/login')}
+            className='button animation rounded-md bg-blue-600 text-white hover:bg-blue-800'
+          >
+            Login
+          </button>
+        )}
       </ul>
     </nav>
   );
