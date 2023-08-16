@@ -29,7 +29,7 @@ export function GoogleLogin() {
   return (
     <div
       onClick={handleGoogleLogin}
-      className='center-xy gap-3 bg-gray-300 px-5 py-2 rounded-md cursor-pointer font-semibold animation hover:bg-gray-400 '
+      className='center-xy animation cursor-pointer gap-3 rounded-md bg-gray-300 px-5 py-2 font-semibold hover:bg-gray-400 '
     >
       <FcGoogle size={25} /> Use Google
     </div>

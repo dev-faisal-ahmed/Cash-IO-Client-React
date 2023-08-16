@@ -7,16 +7,16 @@ import { useNavigate } from 'react-router-dom';
 export function LoginPage() {
   const router = useNavigate();
   return (
-    <section className='min-h-screen bg-gray-200 center-xy p-5'>
-      <div className='sm:bg-white bg-transparent sm:shadow-md sm:w-[450px] w-full px-5 py-10 sm:p-12 rounded-3xl'>
+    <section className='center-xy min-h-screen bg-gray-200 p-5'>
+      <div className='w-full rounded-3xl bg-transparent px-5 py-10 sm:w-[450px] sm:bg-white sm:p-12 sm:shadow-md'>
         <div className='text-center'>
-          <h3 className='font-semibold text-2xl'>User Login</h3>
-          <p className='text-sm text-gray-500 mt-5'>
+          <h3 className='text-2xl font-semibold'>User Login</h3>
+          <p className='mt-5 text-sm text-gray-500'>
             Welcome Back Enter Your Detail
           </p>
         </div>
 
-        <form className='sm:mt-10 mt-20'>
+        <form className='mt-20 sm:mt-10'>
           <div className='flex flex-col gap-8'>
             <LoginInput
               name='email'
@@ -31,19 +31,19 @@ export function LoginPage() {
               icon={<BsKey size={20} />}
             />
           </div>
-          <button className='mt-10 button bg-blue-500 text-white hover:bg-blue-700 animation w-full rounded-md'>
+          <button className='button animation mt-10 w-full rounded-md bg-blue-500 text-white hover:bg-blue-700'>
             Login
           </button>
-          <div className='center-y w-full gap-3 my-3'>
-            <div className='h-[1px] bg-gray-300 w-full'>&nbsp;</div> or
-            <div className='h-[1px] bg-gray-300 w-full'>&nbsp;</div>
+          <div className='center-y my-3 w-full gap-3'>
+            <div className='h-[1px] w-full bg-gray-300'>&nbsp;</div> or
+            <div className='h-[1px] w-full bg-gray-300'>&nbsp;</div>
           </div>
           <GoogleLogin />
-          <p className='text-sm text-center mt-8'>
+          <p className='mt-8 text-center text-sm'>
             Don't have any account?{' '}
             <span
               onClick={() => router('/sign-up')}
-              className='text-blue-500 underline cursor-pointer'
+              className='cursor-pointer text-blue-500 underline'
             >
               Sing Up
             </span>

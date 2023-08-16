@@ -10,12 +10,14 @@ export function DesktopNavbar() {
   const navigate = useNavigate();
   const user = useSelector((store: StoreType) => store.user);
 
+  console.log(user);
+
   return (
-    <nav className='between-y py-3 sticky top-0 bg-gray-200'>
+    <nav className='between-y sticky top-0 bg-gray-200 py-3'>
       {/* -------- logo -------- */}
       <h3
         onClick={() => navigate('/')}
-        className='title text-3xl center-y gap-3 text-blue-600 cursor-pointer'
+        className='title center-y cursor-pointer gap-3 text-3xl text-blue-600'
       >
         <IoWallet />
         Cash-IO
@@ -33,7 +35,7 @@ export function DesktopNavbar() {
         ))}
         <button
           onClick={() => navigate('/login')}
-          className='button bg-blue-600 text-white rounded-md animation hover:bg-blue-800'
+          className='button animation rounded-md bg-blue-600 text-white hover:bg-blue-800'
         >
           {user.login ? 'Logout' : 'Login'}
         </button>
