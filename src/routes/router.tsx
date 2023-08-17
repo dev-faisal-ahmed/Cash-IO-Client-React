@@ -22,6 +22,14 @@ export const router = createBrowserRouter([
     element: <SingUpPage />,
   },
   {
+    path: '/profile',
+    element: (
+      <Layout>
+        <h1>Profile</h1>
+      </Layout>
+    ),
+  },
+  {
     path: '*',
     element: <Navigate to='/' />,
   },

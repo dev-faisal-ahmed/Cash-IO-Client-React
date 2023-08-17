@@ -1,10 +1,10 @@
 type NavLinksType = {
-  title: string;
+  title: 'Home' | 'Profile' | 'Transactions';
   path: string;
 }[];
 
 export const navLinks: NavLinksType = [
   { title: 'Home', path: '/' },
-  { title: 'Profile', path: '/profile/:userEmail' },
-  { title: 'Transactions', path: '/transactions/:userEmail' },
+  { title: 'Profile', path: '/profile' },
+  { title: 'Transactions', path: '/transactions' },
 ];

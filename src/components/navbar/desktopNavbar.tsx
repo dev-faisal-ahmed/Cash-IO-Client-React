@@ -11,10 +11,8 @@ export function DesktopNavbar() {
   const navigate = useNavigate();
   const user = useSelector((store: StoreType) => store.user);
 
-  console.log(user);
-
   return (
-    <nav className='between-y sticky top-0 bg-gray-200 py-3'>
+    <nav className='container hidden bg-gray-200 py-3 sm:flex sm:items-center sm:justify-between'>
       {/* -------- logo -------- */}
       <h3
         onClick={() => navigate('/')}
