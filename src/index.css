@@ -26,6 +26,19 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
+.modal {
+  background: rgba(122, 122, 122, 0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100svh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 150;
+}
+
 @layer components {
   .container {
     @apply mx-auto max-w-[1400px] px-5;
