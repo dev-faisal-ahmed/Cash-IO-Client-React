@@ -6,7 +6,7 @@ type ComplexInputType = {
   options: string[];
 };
 
-export default function ComplexInput({
+export function ComplexInput({
   title,
   id,
   name,
