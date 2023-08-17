@@ -29,7 +29,7 @@ export function Modal({
           className='grid grid-rows-[auto_1fr] rounded-xl bg-white p-4'
           style={{
             width: width || '70%',
-            minWidth: '300px',
+            minWidth: '330px',
             maxWidth: '550px',
             maxHeight: '700px',
           }}

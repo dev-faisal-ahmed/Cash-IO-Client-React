@@ -10,7 +10,7 @@ export function Layout({ children }: LayoutType) {
   return (
     <section className='grid h-[100dvh] grid-rows-[1fr_auto] bg-gray-200 sm:grid-rows-[auto_1fr]'>
       <DesktopNavbar />
-      <section className='hide-scrollbar container overflow-y-auto'>
+      <section className='hide-scrollbar container my-5 overflow-y-auto'>
         {children}
       </section>
       <MobileNavbar />

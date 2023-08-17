@@ -1,15 +1,19 @@
 import { IoWallet } from 'react-icons/io5';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { navLinks } from '../../data/navLinks';
 import { NavLink } from './navLink';
 import { useSelector } from 'react-redux';
 import { StoreType } from '../../utils/types';
 import { NavMenu } from './navMenu';
+import { useState } from 'react';
+import { AddTransaction } from '../modal/addTransaction';
 
 export function DesktopNavbar() {
   const router = useLocation();
   const navigate = useNavigate();
   const user = useSelector((store: StoreType) => store.user);
+  const [showTransaction, setShowTransaction] = useState(false);
 
   return (
     <nav className='container hidden bg-gray-200 py-3 sm:flex sm:items-center sm:justify-between'>
@@ -21,6 +25,7 @@ export function DesktopNavbar() {
         <IoWallet />
         Cash-IO
       </h3>
+
       {/* -------- Nav Links -------- */}
 
       <ul className='center-y gap-8'>
@@ -32,6 +37,18 @@ export function DesktopNavbar() {
             currentPath={router.pathname}
           />
         ))}
+
+        {/* -------- Add Transaction -------- */}
+
+        <button
+          onClick={() => setShowTransaction(true)}
+          className='flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white'
+        >
+          <AiOutlinePlus size={20} />
+        </button>
+
+        {/* -------- Profile / Login Button -------- */}
+
         {user.login ? (
           <NavMenu />
         ) : (
@@ -43,6 +60,8 @@ export function DesktopNavbar() {
           </button>
         )}
       </ul>
+      {/* -------- Add Transaction Modal -------- */}
+      <AddTransaction state={showTransaction} setState={setShowTransaction} />
     </nav>
   );
 }

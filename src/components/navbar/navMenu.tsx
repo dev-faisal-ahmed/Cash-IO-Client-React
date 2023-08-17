@@ -4,10 +4,12 @@ import { ProfileIcon } from '../profile_icon/profileIcon';
 import { StoreType } from '../../utils/types';
 import { logout } from '../../utils/stores/userReducer';
 import { useNavigate } from 'react-router-dom';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 
 export function NavMenu() {
   const user = useSelector((store: StoreType) => store.user);
   const [showMenu, setShowMenu] = useState(false);
+  const ref = useOutsideClick(() => setShowMenu(false));
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,12 +21,22 @@ export function NavMenu() {
   return (
     <div className='relative'>
       {/* profile Icon */}
-      <div onClick={() => setShowMenu(!showMenu)}>
-        <ProfileIcon imageUrl={user.imageUrl} userName={user.name} />
-      </div>
+      {showMenu ? (
+        <div onClick={() => setShowMenu(false)}>
+          <ProfileIcon key={1} imageUrl={user.imageUrl} userName={user.name} />
+        </div>
+      ) : (
+        <div onClick={() => setShowMenu(true)}>
+          <ProfileIcon key={2} imageUrl={user.imageUrl} userName={user.name} />
+        </div>
+      )}
+
       {/* menu */}
       {showMenu && (
-        <div className='absolute right-0 top-12 min-w-[180px] rounded-md bg-white p-4'>
+        <div
+          ref={ref}
+          className='absolute right-0 top-12 min-w-[180px] rounded-md bg-white p-4'
+        >
           <p className='mb-3 font-semibold'>
             {user.name}
             <span className='block text-xs text-gray-500'>{user.email}</span>

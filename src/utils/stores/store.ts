@@ -4,7 +4,9 @@ import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
 import { userReducer } from './userReducer';
 
-const reducers = combineReducers({ user: userReducer });
+const reducers = combineReducers({
+  user: userReducer,
+});
 const persistConfig = {
   key: 'root',
   storage,
