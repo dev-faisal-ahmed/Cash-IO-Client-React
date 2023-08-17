@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { DesktopNavbar } from '../components/navbar/desktopNavbar';
 import { MobileNavbar } from '../components/navbar/mobileNavbar';
+import { MobileTopBar } from '../components/navbar/mobileTopBar';
 
 type LayoutType = {
   children: ReactNode;
@@ -8,9 +9,10 @@ type LayoutType = {
 
 export function Layout({ children }: LayoutType) {
   return (
-    <section className='grid h-[100dvh] grid-rows-[1fr_auto] bg-gray-200 sm:grid-rows-[auto_1fr]'>
+    <section className='grid h-[100dvh] grid-rows-[auto_1fr_auto] bg-white sm:grid-rows-[auto_1fr] sm:bg-gray-200'>
       <DesktopNavbar />
-      <section className='hide-scrollbar container my-5 overflow-y-auto'>
+      <MobileTopBar />
+      <section className='hide-scrollbar container overflow-y-auto rounded-xl bg-gray-200 py-5'>
         {children}
       </section>
       <MobileNavbar />

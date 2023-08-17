@@ -2,7 +2,7 @@ import { Summary } from './summary/summary';
 
 export function HomePage() {
   return (
-    <section>
+    <section className='mt-5'>
       <Summary />
     </section>
   );

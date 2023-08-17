@@ -35,7 +35,7 @@ export function NavMenu() {
       {showMenu && (
         <div
           ref={ref}
-          className='absolute right-0 top-12 min-w-[180px] rounded-md bg-white p-4'
+          className='absolute right-0 top-12 min-w-[180px] rounded-md bg-gray-100 p-4 sm:bg-white'
         >
           <p className='mb-3 font-semibold'>
             {user.name}
