@@ -10,6 +10,7 @@ import { serverAddress } from '../../utils/serverAddress';
 import { postReq } from '../../utils/serverReq';
 import { toast } from 'react-hot-toast';
 import { useGetSummary } from '../../hooks/useGetSummary';
+import { useGetTransaction } from '../../hooks/useGetTransaction';
 
 type AddTransactionType = {
   state: boolean;
@@ -18,6 +19,7 @@ type AddTransactionType = {
 export function AddTransaction({ state, setState }: AddTransactionType) {
   const user = useSelector((state: StoreType) => state.user);
   const { fetchSummary } = useGetSummary(user.email as string);
+  const { fetchTransactions } = useGetTransaction(user.email as string);
   const [loading, setLoading] = useState<boolean>(false);
 
   //  transaction handler
@@ -57,6 +59,7 @@ export function AddTransaction({ state, setState }: AddTransactionType) {
     if (data?.okay) {
       toast.success(data?.msg);
       fetchSummary();
+      fetchTransactions();
     } else toast.error(data?.msg);
 
     setLoading(false);

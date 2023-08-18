@@ -9,6 +9,16 @@ export type ApiType = {
   balance: number;
   expense: number;
   revenue: number;
+  transactions: TransactionType[];
+};
+
+export type TransactionType = {
+  email: string;
+  amount: number;
+  date: Date;
+  category: string;
+  type: 'expense' | 'revenue';
+  _id: string;
 };
 
 export type StoreType = {

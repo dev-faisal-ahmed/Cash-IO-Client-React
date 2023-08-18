@@ -30,7 +30,6 @@ export function LoginPage() {
       .then((userCredential) => {
         const user = userCredential.user;
         if (user) {
-          console.log(user);
           const payLoad = {
             name: user.displayName,
             email: user.email,

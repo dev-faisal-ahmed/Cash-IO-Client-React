@@ -18,8 +18,10 @@ export function InputOption({ title, id, name, options }: InputOptionType) {
         name={name}
         id={id}
       >
-        {options.map((optionData) => (
-          <option value={optionData}>{optionData}</option>
+        {options.map((optionData, index) => (
+          <option key={index} value={optionData}>
+            {optionData}
+          </option>
         ))}
       </select>
     </div>

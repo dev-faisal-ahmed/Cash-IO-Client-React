@@ -28,8 +28,8 @@ export function ComplexInput({
         required
       />
       <datalist className='appearance-none bg-white' id='list'>
-        {options.map((optionData) => (
-          <option className='bg-white' value={optionData}></option>
+        {options.map((optionData, index) => (
+          <option key={index} className='bg-white' value={optionData}></option>
         ))}
       </datalist>
     </div>
