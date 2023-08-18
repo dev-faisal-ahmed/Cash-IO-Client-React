@@ -5,6 +5,13 @@ export type UserInfoType = {
   login: boolean;
 };
 
+export type ApiType = {
+  balance: number;
+  expense: number;
+  revenue: number;
+};
+
 export type StoreType = {
   user: UserInfoType;
+  api: ApiType;
 };
