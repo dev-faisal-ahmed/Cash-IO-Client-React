@@ -23,7 +23,7 @@ export function Summary({ balance, expense, revenue }: SummaryType) {
       />
       <SummaryBox
         icon={<BsFillCalendar2MinusFill size={35} />}
-        title='Expense'
+        title='Expenses'
         value={expense}
       />
     </section>

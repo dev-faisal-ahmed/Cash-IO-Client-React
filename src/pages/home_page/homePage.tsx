@@ -3,6 +3,7 @@ import { Summary } from './summary/summary';
 import { StoreType } from '../../utils/types';
 import { useGetSummary } from '../../hooks/useGetSummary';
 import { useEffect } from 'react';
+import { GraphChart } from './graph/graphChart';
 
 export function HomePage() {
   const user = useSelector((state: StoreType) => state.user);
@@ -17,6 +18,7 @@ export function HomePage() {
   return (
     <section className='mt-5'>
       <Summary balance={balance} expense={expense} revenue={revenue} />
+      <GraphChart />
     </section>
   );
 }
