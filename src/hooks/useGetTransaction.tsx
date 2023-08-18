@@ -16,7 +16,7 @@ export function useGetTransaction(email: string) {
       .then((res) => {
         setIsLoading(false);
         if (res.okay) {
-          dispatch(updateTransactions(res.data));
+          dispatch(updateTransactions({ transactions: res.data }));
         }
       })
       .catch((err) => {
