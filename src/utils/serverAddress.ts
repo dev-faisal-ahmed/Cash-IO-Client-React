@@ -1,2 +1,2 @@
 // export const serverAddress = 'http://localhost:5000';
-export const serverAddress = 'https://cash-io.onrender.com/';
+export const serverAddress = 'https://cash-io.onrender.com';
