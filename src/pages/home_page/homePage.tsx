@@ -22,7 +22,7 @@ export function HomePage() {
   useEffect(() => {
     fetchSummary();
     fetchTransactions();
-  }, [fetchSummary, fetchTransactions]);
+  }, []);
 
   if (isLoading || transactionLoading) {
     return <LoadingSpinner />;

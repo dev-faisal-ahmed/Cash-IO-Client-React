@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 // actions
-
 const apiSlice = createSlice({
   name: 'api',
   initialState: {
