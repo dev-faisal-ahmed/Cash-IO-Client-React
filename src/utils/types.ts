@@ -25,3 +25,13 @@ export type StoreType = {
   user: UserInfoType;
   api: ApiType;
 };
+
+export type ChartType = {
+  data: {
+    [data: string]: {
+      date: string;
+      expense: number;
+      revenue: number;
+    };
+  };
+};

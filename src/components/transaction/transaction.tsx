@@ -14,20 +14,23 @@ export function Transaction(transaction: TransactionType) {
         {type === 'revenue' && <GiWallet size={30} />}
         {type === 'expense' && <IoIosWallet size={30} />}
       </div>
-      <div>
-        <h3 className='mb-1 font-semibold'>{category}</h3>
-        <p className='text-sm text-gray-500'>
+      <div className='w-full'>
+        <h3 className='mb-1 truncate text-sm font-semibold'>{category}</h3>
+        <p className='text-xs text-gray-500'>
           {JSON.stringify(date).slice(1, 11)}
         </p>
       </div>
-      <h2
-        className={`ml-auto text-lg font-semibold ${
-          type === 'revenue' && 'text-green-600'
-        } ${type === 'expense' && 'text-red-600'}`}
-      >
-        {type === 'revenue' && '+'}
-        {type === 'expense' && '-'} &nbsp;{amount} &#2547;
-      </h2>
+      <div>
+        <h2
+          className={`ml-auto font-semibold ${
+            type === 'revenue' && 'text-green-600'
+          } ${type === 'expense' && 'text-red-600'}`}
+        >
+          {type === 'revenue' && '+'}
+          {type === 'expense' && '-'}
+          {amount}
+        </h2>
+      </div>
     </div>
   );
 }
