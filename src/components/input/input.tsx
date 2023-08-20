@@ -2,8 +2,8 @@ type InputType = {
   title: string;
   id: string;
   name: string;
-  type: string;
   placeholder?: string;
+  type: string;
 };
 
 export function Input({ title, id, name, type, placeholder }: InputType) {

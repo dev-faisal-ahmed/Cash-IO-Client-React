@@ -29,11 +29,14 @@ export function HomePage() {
   }
 
   return (
-    <section className='mt-5'>
+    <section className='t-5'>
+      {/* summary */}
       <Summary balance={balance} expense={expense} revenue={revenue} />
+      {/* charts */}
       <GraphChart />
       <section className='mt-10 '>
-        <h1 className='mb-3 font-semibold'>Latest Transactions</h1>
+        <h1 className='mb-4 font-semibold'>Latest Transactions</h1>
+        {/* transactions */}
         <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3'>
           {transactions?.map((transaction, index) => (
             <Transaction
@@ -44,6 +47,7 @@ export function HomePage() {
               type={transaction.type}
               email={transaction.email}
               _id={transaction._id}
+              description={transaction.description}
             />
           ))}
         </div>
