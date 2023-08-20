@@ -45,6 +45,8 @@ export default function TransactionModal({
       </div>
       {show === 'detail' && (
         <TransactionModalDetail
+          _id={_id}
+          setModalState={setState}
           amount={amount}
           category={category}
           date={date}
@@ -54,13 +56,13 @@ export default function TransactionModal({
       )}
       {show === 'edit' && (
         <TransactionModalForm
+          _id={_id}
           setModalState={setState}
           amount={amount}
           category={category}
           date={date}
           type={type}
           description={description}
-          _id={_id}
         />
       )}
     </Modal>

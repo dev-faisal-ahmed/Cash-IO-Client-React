@@ -8,3 +8,14 @@ export function postReq(body: object) {
     },
   };
 }
+
+export function deleteReq(body: object) {
+  return {
+    method: 'DELETE',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  };
+}
