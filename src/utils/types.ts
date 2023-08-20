@@ -13,12 +13,13 @@ export type ApiType = {
 };
 
 export type TransactionType = {
-  email: string;
+  email?: string;
+  _id?: string;
   amount: number;
   date: Date;
   category: string;
   type: 'expense' | 'revenue';
-  _id: string;
+  description?: string;
 };
 
 export type StoreType = {
@@ -34,4 +35,11 @@ export type ChartType = {
       revenue: number;
     };
   };
+};
+
+export type TransactionModalFormType = {
+  amount: string;
+  description: string;
+  category: string;
+  type: string;
 };
