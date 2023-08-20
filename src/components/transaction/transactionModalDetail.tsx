@@ -1,15 +1,58 @@
+import { useState } from 'react';
 import { GiWallet } from 'react-icons/gi';
-import { TransactionType } from '../../utils/types';
+import { StoreType, TransactionType } from '../../utils/types';
 import { IoIosWallet } from 'react-icons/io';
 import { FaTrash } from 'react-icons/fa6';
+import { serverAddress } from '../../utils/serverAddress';
+import { deleteReq } from '../../utils/serverReq';
+import { Dispatch, SetStateAction } from 'react';
+import { toast } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { useGetTransaction } from '../../hooks/useGetTransaction';
 
+// type
+type TransactionDetailType = TransactionType & {
+  setModalState: Dispatch<SetStateAction<boolean>>;
+};
+
+// component
 export function TransactionModalDetail({
+  _id,
   amount,
   category,
   date,
   type,
   description,
-}: TransactionType) {
+  setModalState,
+}: TransactionDetailType) {
+  const { email } = useSelector((state: StoreType) => state.user);
+  const { fetchTransactions } = useGetTransaction(email as string);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // functions
+  async function handleDeleteTransaction() {
+    setLoading(true);
+    const toastId = toast.loading('Deleting Transaction ...');
+    try {
+      const response = await fetch(
+        `${serverAddress}/delete-transaction`,
+        deleteReq({ _id }),
+      ).then((res) => res.json());
+
+      if (response.okay) {
+        toast.success(response.msg);
+        fetchTransactions();
+      } else toast.error(response.msg);
+
+      toast.dismiss(toastId);
+    } catch (err) {
+      toast.error(JSON.stringify(err));
+    }
+    toast.dismiss(toastId);
+    setLoading(false);
+    setModalState(false);
+  }
+
   return (
     <div className='mt-8 flex gap-5 rounded-md border bg-white p-5'>
       <div
@@ -38,9 +81,14 @@ export function TransactionModalDetail({
             {type === 'expense' && '-'}
             {amount}
           </h2>
-          <div className='cursor-pointer rounded-md bg-red-100 p-2 text-red-600'>
-            <FaTrash size={20} />
-          </div>
+          {!loading && (
+            <div
+              onClick={handleDeleteTransaction}
+              className='cursor-pointer rounded-md bg-red-100 p-2 text-red-600'
+            >
+              <FaTrash size={20} />
+            </div>
+          )}
         </div>
       </div>
     </div>
