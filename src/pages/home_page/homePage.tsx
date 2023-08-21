@@ -38,17 +38,19 @@ export function HomePage() {
         <h1 className='mb-4 font-semibold'>Latest Transactions</h1>
         {/* transactions */}
         <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3'>
-          {transactions?.map((transaction, index) => (
-            <Transaction
-              key={index}
-              amount={transaction.amount}
-              category={transaction.category}
-              date={transaction.date}
-              type={transaction.type}
-              _id={transaction._id}
-              description={transaction.description}
-            />
-          ))}
+          {transactions
+            ?.slice(0, 9)
+            .map((transaction, index) => (
+              <Transaction
+                key={index}
+                amount={transaction.amount}
+                category={transaction.category}
+                date={transaction.date}
+                type={transaction.type}
+                _id={transaction._id}
+                description={transaction.description}
+              />
+            ))}
         </div>
       </section>
     </section>
