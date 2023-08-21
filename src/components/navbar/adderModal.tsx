@@ -16,7 +16,7 @@ export function AdderModal({ state, setState }: AdderModalType) {
       <div className='mx-auto mb-5 grid w-fit grid-cols-2 rounded-md border'>
         <button
           onClick={() => setShow('Transaction')}
-          className={`rounded px-5 py-2 ${
+          className={`truncate rounded px-5 py-2 ${
             show === 'Transaction'
               ? 'bg-blue-500 text-white shadow'
               : 'text-gray-500'
@@ -26,13 +26,13 @@ export function AdderModal({ state, setState }: AdderModalType) {
         </button>
         <button
           onClick={() => setShow('Lend/Borrow')}
-          className={`rounded px-5 py-2 ${
+          className={`truncate rounded px-5 py-2  ${
             show === 'Lend/Borrow'
               ? 'bg-blue-500 text-white shadow'
               : 'text-gray-500'
           }`}
         >
-          Lend / Borrow
+          Lend or Borrow
         </button>
       </div>
       {show === 'Transaction' && <AddTransaction setState={setState} />}

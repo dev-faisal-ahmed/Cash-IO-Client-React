@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { AddTransaction } from '../transaction/addTransaction';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoWallet } from 'react-icons/io5';
 import { NavMenu } from './navMenu';
+import { AdderModal } from './adderModal';
 
 export function MobileTopBar() {
-  const [showTransaction, setShowTransaction] = useState(false);
+  const [showAdder, setShowAdder] = useState<boolean>(false);
 
   return (
     <section className='flex items-center justify-between px-5 py-3 sm:hidden'>
@@ -15,15 +15,14 @@ export function MobileTopBar() {
       </h3>
       <div className='flex items-center gap-5'>
         <button
-          onClick={() => setShowTransaction(true)}
+          onClick={() => setShowAdder(true)}
           className='flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white'
         >
           <AiOutlinePlus size={20} />
         </button>
         <NavMenu />
       </div>
-
-      <AddTransaction state={showTransaction} setState={setShowTransaction} />
+      <AdderModal state={showAdder} setState={setShowAdder} />
     </section>
   );
 }
