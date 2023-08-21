@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AddTransaction } from '../modal/addTransaction';
+import { AddTransaction } from '../transaction/addTransaction';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoWallet } from 'react-icons/io5';
 import { NavMenu } from './navMenu';

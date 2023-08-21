@@ -4,6 +4,7 @@ import { HomePage } from '../pages/home_page/homePage';
 import { LoginPage } from '../pages/login_page/loginPage';
 import { SingUpPage } from '../pages/sign_up_page/singUpPage';
 import LoginProtector from '../components/protected_route/loginProtector';
+import { TransactionPage } from '../pages/transaction_page/transactionPage';
 
 export const router = createBrowserRouter([
   {
@@ -11,6 +12,22 @@ export const router = createBrowserRouter([
     element: (
       <Layout>
         <HomePage />
+      </Layout>
+    ),
+  },
+  {
+    path: '/transactions',
+    element: (
+      <Layout>
+        <TransactionPage />
+      </Layout>
+    ),
+  },
+  {
+    path: '/profile',
+    element: (
+      <Layout>
+        <h1>Profile</h1>
       </Layout>
     ),
   },
@@ -28,14 +45,6 @@ export const router = createBrowserRouter([
       <LoginProtector>
         <SingUpPage />
       </LoginProtector>
-    ),
-  },
-  {
-    path: '/profile',
-    element: (
-      <Layout>
-        <h1>Profile</h1>
-      </Layout>
     ),
   },
   {

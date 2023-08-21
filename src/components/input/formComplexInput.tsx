@@ -5,7 +5,7 @@ type FormComplexInputType = {
   title: string;
   name: string;
   placeholder: string;
-  options: string[];
+  options: string[] | null;
   defaultValue?: string;
   register: UseFormRegister<TransactionModalFormType>;
 };
@@ -35,7 +35,7 @@ export function FormComplexInput({
           required
         />
         <datalist className='appearance-none bg-white' id='list'>
-          {options.map((optionData, index) => (
+          {options?.map((optionData, index) => (
             <option
               key={index}
               className='bg-white'
