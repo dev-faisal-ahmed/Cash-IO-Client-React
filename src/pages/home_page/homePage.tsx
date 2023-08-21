@@ -9,15 +9,15 @@ import { LoadingSpinner } from '../../components/loadingSpinner';
 import { Transaction } from '../../components/transaction/transaction';
 
 export function HomePage() {
-  const user = useSelector((state: StoreType) => state.user);
+  const { email } = useSelector((state: StoreType) => state.user);
   const { balance, expense, revenue, fetchSummary, isLoading } = useGetSummary(
-    user.email as string,
+    email as string,
   );
   const {
     transactions,
     fetchTransactions,
     isLoading: transactionLoading,
-  } = useGetTransaction(user.email as string);
+  } = useGetTransaction(email as string);
 
   useEffect(() => {
     fetchSummary();
@@ -45,7 +45,6 @@ export function HomePage() {
               category={transaction.category}
               date={transaction.date}
               type={transaction.type}
-              email={transaction.email}
               _id={transaction._id}
               description={transaction.description}
             />

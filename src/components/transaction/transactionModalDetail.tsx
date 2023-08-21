@@ -9,6 +9,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
+import { useGetSummary } from '../../hooks/useGetSummary';
 
 // type
 type TransactionDetailType = TransactionType & {
@@ -26,7 +27,10 @@ export function TransactionModalDetail({
   setModalState,
 }: TransactionDetailType) {
   const { email } = useSelector((state: StoreType) => state.user);
-  const { fetchTransactions } = useGetTransaction(email as string);
+  const { fetchTransactions, transactions } = useGetTransaction(
+    email as string,
+  );
+  const { fetchSummary } = useGetSummary(email as string);
   const [loading, setLoading] = useState<boolean>(false);
 
   // functions
@@ -36,12 +40,14 @@ export function TransactionModalDetail({
     try {
       const response = await fetch(
         `${serverAddress}/delete-transaction`,
-        deleteReq({ _id }),
+        deleteReq({ _id, email, type, amount }),
       ).then((res) => res.json());
 
       if (response.okay) {
         toast.success(response.msg);
         fetchTransactions();
+        console.log(transactions);
+        fetchSummary();
       } else toast.error(response.msg);
 
       toast.dismiss(toastId);
