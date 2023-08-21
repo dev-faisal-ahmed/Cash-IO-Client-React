@@ -33,7 +33,7 @@ export function AddTransaction({ state, setState }: AddTransactionType) {
     const transactionInfo = {
       email: user.email,
       amount: parseInt(amount),
-      date,
+      date: new Date(date),
       category,
       type,
       description,

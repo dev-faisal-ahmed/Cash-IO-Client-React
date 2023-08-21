@@ -12,7 +12,7 @@ export function GraphChart() {
   >('daily');
 
   return (
-    <section className='mt-10 rounded-md bg-white p-8 shadow-md'>
+    <section className='mt-10 rounded-md bg-white p-3 shadow-md sm:p-8'>
       <div className='mb-10 flex items-center justify-between '>
         <h2 className='font-semibold'>Transactions Analysis</h2>
         <div className='flex items-center gap-1 rounded-md bg-blue-50 px-2 py-1'>
