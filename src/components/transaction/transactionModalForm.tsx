@@ -14,6 +14,7 @@ import { serverAddress } from '../../utils/serverAddress';
 import { postReq } from '../../utils/serverReq';
 import { useSelector } from 'react-redux';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
+import { useGetSummary } from '../../hooks/useGetSummary';
 
 type TransactionModalFormComponentType = TransactionType & {
   setModalState: Dispatch<SetStateAction<boolean>>;
@@ -29,8 +30,9 @@ export function TransactionModalForm({
 }: TransactionModalFormComponentType) {
   const { register, handleSubmit, reset } = useForm<TransactionModalFormType>();
   const { email } = useSelector((state: StoreType) => state.user);
-  const { fetchTransactions } = useGetTransaction(email as string);
   const [loading, setLoading] = useState<boolean>(false);
+  const { fetchTransactions } = useGetTransaction(email as string);
+  const { fetchSummary } = useGetSummary(email as string);
 
   async function handleUpdateTransaction(data: TransactionModalFormType) {
     if (
@@ -50,16 +52,24 @@ export function TransactionModalForm({
       category: data.category,
       type: data.type,
       description: data.description.trim(),
+      email,
+      prevType: type,
+      prevAmount: amount,
     };
-    const response = await fetch(
-      `${serverAddress}/update-transaction`,
-      postReq(formData),
-    ).then((res) => res.json());
+    try {
+      const response = await fetch(
+        `${serverAddress}/update-transaction`,
+        postReq(formData),
+      ).then((res) => res.json());
 
-    if (response.okay) {
-      toast.success(response.msg);
-      fetchTransactions();
-    } else toast.error(response.msg);
+      if (response.okay) {
+        toast.success(response.msg);
+        fetchTransactions();
+        fetchSummary();
+      } else toast.error(response.msg);
+    } catch (err) {
+      toast.error('Something went wrong');
+    }
 
     reset();
     setLoading(false);
