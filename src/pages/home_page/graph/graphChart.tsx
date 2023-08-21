@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { AreaGraph } from './areaGraph';
 import { StoreType } from '../../../utils/types';
 import { getDailyTransactions } from '../../../utils/helper';
-import BarGraph from './barGraph';
+// import BarGraph from './barGraph';
 
 export function GraphChart() {
   const { transactions } = useSelector((state: StoreType) => state.api);
@@ -35,7 +35,8 @@ export function GraphChart() {
         <AreaGraph data={getDailyTransactions(transactions, 30)} />
       )}
       {selectedOption === 'daily' && (
-        <BarGraph data={getDailyTransactions(transactions, 7)} />
+        <AreaGraph data={getDailyTransactions(transactions, 7)} />
+        // <BarGraph data={getDailyTransactions(transactions, 15)} />
       )}
     </section>
   );

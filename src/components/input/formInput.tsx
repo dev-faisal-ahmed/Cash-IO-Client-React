@@ -29,7 +29,9 @@ export function FormInput({
         defaultValue={defaultValue}
         id={name}
         placeholder={placeholder}
-        {...register(name as 'type' | 'amount' | 'description' | 'category')}
+        {...register(
+          name as 'type' | 'amount' | 'description' | 'category' | 'date',
+        )}
         required
       />
     </div>

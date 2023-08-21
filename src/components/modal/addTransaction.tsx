@@ -1,16 +1,17 @@
-import { Dispatch, SetStateAction, FormEvent, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Modal } from './modal';
-import { Input } from '../input/input';
-import { InputOption } from '../input/inputOption';
-import { ComplexInput } from '../input/complexInput';
-import { TextArea } from '../input/textArea';
 import { useSelector } from 'react-redux';
-import { StoreType } from '../../utils/types';
+import { TransactionModalFormType, StoreType } from '../../utils/types';
 import { serverAddress } from '../../utils/serverAddress';
 import { postReq } from '../../utils/serverReq';
 import { toast } from 'react-hot-toast';
 import { useGetSummary } from '../../hooks/useGetSummary';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
+import { FormInput } from '../input/formInput';
+import { useForm } from 'react-hook-form';
+import { FormOptionInput } from '../input/formOptionInput';
+import { FormComplexInput } from '../input/formComplexInput';
+import { FormTextArea } from '../input/formTextArea';
 
 type AddTransactionType = {
   state: boolean;
@@ -21,29 +22,17 @@ export function AddTransaction({ state, setState }: AddTransactionType) {
   const { fetchSummary } = useGetSummary(user.email as string);
   const { fetchTransactions } = useGetTransaction(user.email as string);
   const [loading, setLoading] = useState<boolean>(false);
+  const { register, handleSubmit, reset } = useForm<TransactionModalFormType>();
 
   //  transaction handler
-  async function handleAddTransaction(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function handleAddTransaction(fromData: TransactionModalFormType) {
     setLoading(true);
     const toastId = toast.loading('Adding Transaction ...');
-    const target = event.target as typeof event.target & {
-      amount: { value: number };
-      date: { value: Date };
-      type: { value: string };
-      category: { value: string };
-      description: { value: string };
-    };
-
-    const amount = +target.amount.value;
-    const date = new Date(target.date.value);
-    const category = target.category.value;
-    const type = target.type.value;
-    const description = target.description.value;
+    const { amount, category, date, description, type } = fromData;
 
     const transactionInfo = {
       email: user.email,
-      amount,
+      amount: parseInt(amount),
       date,
       category,
       type,
@@ -64,43 +53,47 @@ export function AddTransaction({ state, setState }: AddTransactionType) {
 
     setLoading(false);
     toast.dismiss(toastId);
+    reset();
     setState(false);
   }
 
   return (
     <Modal title='Add Transaction' openModal={state} setOpenModal={setState}>
-      <form onSubmit={handleAddTransaction} className='flex flex-col gap-4'>
+      <form
+        onSubmit={handleSubmit(handleAddTransaction)}
+        className='flex flex-col gap-4'
+      >
         <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5'>
-          <Input
+          <FormInput
             title='Amount'
-            type='number'
-            id='amount'
             name='amount'
+            register={register}
+            type='number'
             placeholder='Enter Amount'
           />
-          <Input title='Date' id='date' name='date' type='date' />
+
+          <FormInput title='Date' name='date' register={register} type='date' />
         </div>
         <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5'>
-          <InputOption
+          <FormOptionInput
             title='Transaction Type'
-            id='type'
             name='type'
             options={['expense', 'revenue']}
-            placeholder='Select What type of transaction'
+            register={register}
           />
-          <ComplexInput
+          <FormComplexInput
             title='Category'
-            id='category'
             name='category'
             options={['Travel', 'Transport', 'Snacks']}
             placeholder='Select Category'
+            register={register}
           />
         </div>
-        <TextArea
+        <FormTextArea
           title='Description'
-          id='description'
           name='description'
           placeholder='Write a short description'
+          register={register}
         />
         <hr />
         <button

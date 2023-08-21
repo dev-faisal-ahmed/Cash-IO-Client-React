@@ -42,4 +42,5 @@ export type TransactionModalFormType = {
   description: string;
   category: string;
   type: string;
+  date: Date;
 };
