@@ -6,7 +6,7 @@ type FromInputOptionType = {
   name: string;
   options: string[];
   register: UseFormRegister<TransactionModalFormType>;
-  defaultValue: string;
+  defaultValue?: string;
 };
 
 export function FormOptionInput({
@@ -27,7 +27,7 @@ export function FormOptionInput({
           className='w-full bg-transparent px-3 py-2 outline-none'
           id={name}
           defaultValue={defaultValue}
-          {...register(name as 'amount' | 'description' | 'category' | 'type')}
+          {...register(name as 'type')}
         >
           {options.map((optionData, index) => (
             <option key={index} value={optionData}>

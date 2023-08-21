@@ -5,7 +5,7 @@ type FormTextAreaType = {
   title: string;
   name: string;
   placeholder: string;
-  defaultValue: string;
+  defaultValue?: string;
   register: UseFormRegister<TransactionModalFormType>;
 };
 
@@ -26,7 +26,7 @@ export function FormTextArea({
         className='w-full rounded-md border border-gray-400 px-3 py-2 outline-none'
         id={name}
         placeholder={placeholder}
-        {...register(name as 'amount' | 'description' | 'category' | 'type')}
+        {...register(name as 'description')}
         defaultValue={defaultValue}
         required
       />
