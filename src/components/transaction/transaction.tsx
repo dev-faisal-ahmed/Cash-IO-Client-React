@@ -24,7 +24,7 @@ export function Transaction(transaction: TransactionType) {
         </p>
       </div>
       <div>
-        <div>
+        <div className='flex flex-col items-end justify-between gap-3'>
           <h2
             className={`ml-auto font-semibold ${
               type === 'revenue' && 'text-green-600'
@@ -36,7 +36,7 @@ export function Transaction(transaction: TransactionType) {
           </h2>
           <button
             onClick={() => setOpenModal(true)}
-            className='animation mt-2 rounded bg-blue-500 p-1 text-xs text-white hover:bg-blue-600'
+            className='animation w-fit rounded bg-blue-500 p-1 text-xs text-white hover:bg-blue-600'
           >
             Detail
           </button>
