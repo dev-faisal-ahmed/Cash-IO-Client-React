@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FormInput } from '../input/formInput';
+import { FormInput } from '../../components/input/formInput';
 import { FromType, StoreType } from '../../utils/types';
 import { twMerge } from 'tailwind-merge';
 import { serverAddress } from '../../utils/serverAddress';

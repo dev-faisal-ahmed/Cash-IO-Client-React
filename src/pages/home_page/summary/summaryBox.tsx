@@ -19,7 +19,7 @@ export function SummaryBox({ title, data }: SummaryBoxType) {
         title === 'Expenses' && 'bg-red-600'
       }`}
     >
-      <h2 className='mb-2 text-xl font-semibold'>{title}</h2>
+      <h2 className='mb-2 text-2xl font-semibold'>{title}</h2>
       <div className='flex flex-col gap-1 text-gray-100'>
         {data.map((info, index) => {
           total +=

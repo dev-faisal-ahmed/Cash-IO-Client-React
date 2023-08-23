@@ -36,7 +36,7 @@ export function HomePage() {
       <section className='mt-10 '>
         <h1 className='mb-4 font-semibold'>Latest Transactions</h1>
         {/* transactions */}
-        <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3'>
+        <div className='page-grid'>
           {transactions
             ?.slice(0, 9)
             .map((transaction, index) => (
