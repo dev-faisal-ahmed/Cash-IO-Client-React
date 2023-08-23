@@ -57,7 +57,7 @@ export function GoogleLogin() {
   return (
     <div className='center-xy animation cursor-pointer gap-3 rounded-md bg-gray-300 px-5 py-2 font-semibold hover:bg-gray-400 '>
       {loading ? (
-        <div className='h-10 py-1'>
+        <div className='h-8 py-1'>
           <LoadingSpinner />
         </div>
       ) : (

@@ -1,4 +1,4 @@
-import { TransactionType } from './types';
+import { TransactionType, WalletType } from './types';
 
 // this function will create a object with where it's key will be a date and value will be the transaction object
 export function getTransactionMap(transactions: TransactionType[]) {
@@ -62,4 +62,8 @@ export function getDailyTransactions(
     weeklyTransactions[dateString].revenue = revenue | 0;
   }
   return weeklyTransactions;
+}
+
+export function getWalletName(wallets: WalletType[]) {
+  return wallets.map((wallet) => wallet.name);
 }

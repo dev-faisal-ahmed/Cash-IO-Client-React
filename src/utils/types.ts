@@ -5,10 +5,14 @@ export type UserInfoType = {
   login: boolean;
 };
 
+export type WalletType = {
+  expense: number | 0;
+  revenue: number | 0;
+  name: string;
+};
+
 export type ApiType = {
-  balance: number;
-  expense: number;
-  revenue: number;
+  wallets: WalletType[];
   transactions: TransactionType[];
 };
 
@@ -20,6 +24,7 @@ export type TransactionType = {
   category: string;
   type: 'expense' | 'revenue';
   description?: string;
+  wallet: string;
 };
 
 export type StoreType = {
@@ -43,4 +48,5 @@ export type TransactionModalFormType = {
   category: string;
   type: string;
   date: Date;
+  wallet: string;
 };

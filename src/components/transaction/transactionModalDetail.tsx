@@ -9,7 +9,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
-import { useGetSummary } from '../../hooks/useGetSummary';
+import { useGetWallets } from '../../hooks/useGetWallets';
 
 // type
 type TransactionDetailType = TransactionType & {
@@ -30,7 +30,7 @@ export function TransactionModalDetail({
   const { fetchTransactions, transactions } = useGetTransaction(
     email as string,
   );
-  const { fetchSummary } = useGetSummary(email as string);
+  const { fetchWallets } = useGetWallets(email as string);
   const [loading, setLoading] = useState<boolean>(false);
 
   // functions
@@ -47,7 +47,7 @@ export function TransactionModalDetail({
         toast.success(response.msg);
         fetchTransactions();
         console.log(transactions);
-        fetchSummary();
+        fetchWallets();
       } else toast.error(response.msg);
 
       toast.dismiss(toastId);

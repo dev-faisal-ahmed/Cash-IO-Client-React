@@ -4,16 +4,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const apiSlice = createSlice({
   name: 'api',
   initialState: {
-    balance: 0,
-    expense: 0,
-    revenue: 0,
+    wallets: [],
     transactions: [],
   },
   reducers: {
-    updateSummary: function (state, action) {
-      state.balance = action.payload.balance;
-      state.expense = action.payload.expense;
-      state.revenue = action.payload.revenue;
+    updateWallets: function (state, action) {
+      state.wallets = action.payload.wallets;
     },
     updateTransactions: function (state, action) {
       state.transactions = action.payload.transactions;
@@ -21,5 +17,5 @@ const apiSlice = createSlice({
   },
 });
 
-export const { updateSummary, updateTransactions } = apiSlice.actions;
+export const { updateWallets, updateTransactions } = apiSlice.actions;
 export const apiReducer = apiSlice.reducer;

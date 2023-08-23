@@ -5,6 +5,7 @@ import { LoginPage } from '../pages/login_page/loginPage';
 import { SingUpPage } from '../pages/sign_up_page/singUpPage';
 import LoginProtector from '../components/protected_route/loginProtector';
 import { TransactionPage } from '../pages/transaction_page/transactionPage';
+import { ProfilePage } from '../pages/profile_page/profilePage';
 
 export const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
     path: '/profile',
     element: (
       <Layout>
-        <h1>Profile</h1>
+        <ProfilePage />
       </Layout>
     ),
   },
