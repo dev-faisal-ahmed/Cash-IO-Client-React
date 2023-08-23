@@ -1,10 +1,6 @@
 import { useState, Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  StoreType,
-  TransactionModalFormType,
-  TransactionType,
-} from '../../utils/types';
+import { StoreType, FromType, TransactionType } from '../../utils/types';
 import { FormInput } from '../input/formInput';
 import { FormOptionInput } from '../input/formOptionInput';
 import { FormComplexInput } from '../input/formComplexInput';
@@ -15,6 +11,8 @@ import { postReq } from '../../utils/serverReq';
 import { useSelector } from 'react-redux';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
 import { useGetWallets } from '../../hooks/useGetWallets';
+import { getWalletName } from '../../utils/helper';
+import { useGetCategory } from '../../hooks/useGetCategory';
 
 type TransactionModalFormComponentType = TransactionType & {
   setModalState: Dispatch<SetStateAction<boolean>>;
@@ -26,20 +24,23 @@ export function TransactionModalForm({
   type,
   category,
   description,
+  wallet,
   setModalState,
 }: TransactionModalFormComponentType) {
-  const { register, handleSubmit, reset } = useForm<TransactionModalFormType>();
+  const { register, handleSubmit, reset } = useForm<FromType>();
   const { email } = useSelector((state: StoreType) => state.user);
   const [loading, setLoading] = useState<boolean>(false);
   const { fetchTransactions } = useGetTransaction(email as string);
-  const { fetchWallets } = useGetWallets(email as string);
+  const { fetchWallets, wallets } = useGetWallets(email as string);
+  const { categories } = useGetCategory();
 
-  async function handleUpdateTransaction(data: TransactionModalFormType) {
+  async function handleUpdateTransaction(data: FromType) {
     if (
       +data.amount === amount &&
       data.category === category &&
       data.type === type &&
-      data.description.trim() === description
+      data.description.trim() === description &&
+      wallet === data.wallet
     ) {
       toast.error('Nothing to update', { duration: 500 });
       return;
@@ -48,13 +49,15 @@ export function TransactionModalForm({
     setLoading(true);
     const formData = {
       _id,
-      amount: +data.amount,
-      category: data.category,
-      type: data.type,
-      description: data.description.trim(),
       email,
-      prevType: type,
+      amount: +data.amount,
       prevAmount: amount,
+      type: data.type,
+      prevType: type,
+      wallet: data.wallet,
+      prevWallet: wallet,
+      category: data.category,
+      description: data.description.trim(),
     };
     try {
       const response = await fetch(
@@ -99,14 +102,23 @@ export function TransactionModalForm({
           options={['revenue', 'expense']}
         />
       </div>
-      <FormComplexInput
-        name='category'
-        title='Category'
-        placeholder='Enter Category'
-        options={['Travel', 'Mobile Recharge']}
-        register={register}
-        defaultValue={category}
-      />
+      <div className='flex items-center gap-5'>
+        <FormOptionInput
+          name='wallet'
+          title='Wallet'
+          register={register}
+          defaultValue={wallet}
+          options={getWalletName(wallets)}
+        />
+        <FormComplexInput
+          name='category'
+          title='Category'
+          placeholder='Enter Category'
+          options={categories as string[]}
+          register={register}
+          defaultValue={category}
+        />
+      </div>
       <FormTextArea
         name='description'
         title='Description'
@@ -114,10 +126,7 @@ export function TransactionModalForm({
         register={register}
         defaultValue={description as string}
       />
-      <button
-        disabled={loading}
-        className='rounded-md border-2 border-blue-500 bg-blue-500 px-5 py-2 font-semibold text-white hover:bg-transparent hover:text-blue-500 disabled:cursor-not-allowed disabled:bg-gray-300'
-      >
+      <button disabled={loading} className='button-primary'>
         Update
       </button>
     </form>

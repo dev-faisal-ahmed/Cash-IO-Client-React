@@ -42,7 +42,7 @@ export type ChartType = {
   };
 };
 
-export type TransactionModalFormType = {
+export type FromType = {
   amount: string;
   description: string;
   category: string;

@@ -25,6 +25,7 @@ export function TransactionModalDetail({
   type,
   description,
   setModalState,
+  wallet,
 }: TransactionDetailType) {
   const { email } = useSelector((state: StoreType) => state.user);
   const { fetchTransactions, transactions } = useGetTransaction(
@@ -40,7 +41,7 @@ export function TransactionModalDetail({
     try {
       const response = await fetch(
         `${serverAddress}/delete-transaction`,
-        deleteReq({ _id, email, type, amount }),
+        deleteReq({ _id, email, type, amount, wallet }),
       ).then((res) => res.json());
 
       if (response.okay) {

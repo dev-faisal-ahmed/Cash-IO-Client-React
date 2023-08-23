@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { TransactionModalFormType, StoreType } from '../../utils/types';
+import { FromType, StoreType } from '../../utils/types';
 import { serverAddress } from '../../utils/serverAddress';
 import { postReq } from '../../utils/serverReq';
 import { toast } from 'react-hot-toast';
@@ -22,11 +22,11 @@ export function AddTransaction({ setState }: AddTransactionType) {
   const { fetchWallets, wallets } = useGetWallets(email as string);
   const { fetchTransactions } = useGetTransaction(email as string);
   const [loading, setLoading] = useState<boolean>(false);
-  const { register, handleSubmit, reset } = useForm<TransactionModalFormType>();
+  const { register, handleSubmit, reset } = useForm<FromType>();
   const { categories } = useGetCategory();
 
   //  transaction handler
-  async function handleAddTransaction(fromData: TransactionModalFormType) {
+  async function handleAddTransaction(fromData: FromType) {
     setLoading(true);
     const toastId = toast.loading('Adding Transaction ...');
     const { amount, category, date, description, type, wallet } = fromData;
@@ -103,10 +103,7 @@ export function AddTransaction({ setState }: AddTransactionType) {
         register={register}
       />
       <hr />
-      <button
-        disabled={loading}
-        className='rounded-md border-2 border-blue-500 bg-blue-500 px-5 py-2 font-semibold text-white hover:bg-transparent hover:text-blue-500 disabled:cursor-not-allowed disabled:bg-gray-300'
-      >
+      <button disabled={loading} className='button-primary'>
         + Add
       </button>
     </form>
