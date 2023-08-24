@@ -22,6 +22,7 @@ export function TransactionPage() {
           ?.slice(0, 9)
           .map((transaction, index) => (
             <Transaction
+              wallet={transaction.wallet}
               key={index}
               amount={transaction.amount}
               category={transaction.category}
