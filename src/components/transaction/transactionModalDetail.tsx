@@ -4,7 +4,7 @@ import { StoreType, TransactionType } from '../../utils/types';
 import { IoIosWallet } from 'react-icons/io';
 import { FaTrash } from 'react-icons/fa6';
 import { serverAddress } from '../../utils/serverAddress';
-import { deleteReq } from '../../utils/serverReq';
+import { serverReq } from '../../utils/serverReq';
 import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
@@ -41,7 +41,7 @@ export function TransactionModalDetail({
     try {
       const response = await fetch(
         `${serverAddress}/delete-transaction`,
-        deleteReq({ _id, email, type, amount, wallet }),
+        serverReq('DELETE', { _id, email, type, amount, wallet }),
       ).then((res) => res.json());
 
       if (response.okay) {

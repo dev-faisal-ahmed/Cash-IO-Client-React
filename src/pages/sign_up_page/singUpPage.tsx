@@ -9,7 +9,7 @@ import { FormEvent } from 'react';
 import { auth } from '../../utils/firebaseInit';
 import { toast } from 'react-hot-toast';
 import { serverAddress } from '../../utils/serverAddress';
-import { postReq } from '../../utils/serverReq';
+import { serverReq } from '../../utils/serverReq';
 import {
   createUserWithEmailAndPassword,
   updateProfile,
@@ -42,7 +42,7 @@ export function SingUpPage() {
             // after updating user name
             .then(() => {
               const url = `${serverAddress}/sign-up`;
-              fetch(url, postReq({ name, email }))
+              fetch(url, serverReq('POST', { name, email }))
                 .then((res) => res.json())
                 .then((res) => {
                   setLoading(false);

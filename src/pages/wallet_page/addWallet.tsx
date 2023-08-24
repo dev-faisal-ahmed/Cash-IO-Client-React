@@ -4,7 +4,7 @@ import { FormInput } from '../../components/input/formInput';
 import { FromType, StoreType } from '../../utils/types';
 import { twMerge } from 'tailwind-merge';
 import { serverAddress } from '../../utils/serverAddress';
-import { postReq } from '../../utils/serverReq';
+import { serverReq } from '../../utils/serverReq';
 import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useGetWallets } from '../../hooks/useGetWallets';
@@ -22,7 +22,7 @@ export const AddWallet = () => {
     try {
       const response = await fetch(
         `${serverAddress}/add-wallet`,
-        postReq({ revenue: parseInt(amount), name: wallet, email }),
+        serverReq('POST', { revenue: parseInt(amount), name: wallet, email }),
       ).then((res) => res.json());
       if (response.okay) {
         toast.success(response.msg, { duration: 1000 });

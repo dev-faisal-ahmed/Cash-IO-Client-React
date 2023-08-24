@@ -7,7 +7,7 @@ import { FormComplexInput } from '../input/formComplexInput';
 import { FormTextArea } from '../input/formTextArea';
 import { toast } from 'react-hot-toast';
 import { serverAddress } from '../../utils/serverAddress';
-import { postReq } from '../../utils/serverReq';
+import { serverReq } from '../../utils/serverReq';
 import { useSelector } from 'react-redux';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
 import { useGetWallets } from '../../hooks/useGetWallets';
@@ -62,7 +62,7 @@ export function TransactionModalForm({
     try {
       const response = await fetch(
         `${serverAddress}/update-transaction`,
-        postReq(formData),
+        serverReq('PATCH', formData),
       ).then((res) => res.json());
 
       if (response.okay) {

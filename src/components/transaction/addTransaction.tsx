@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FromType, StoreType } from '../../utils/types';
 import { serverAddress } from '../../utils/serverAddress';
-import { postReq } from '../../utils/serverReq';
+import { serverReq } from '../../utils/serverReq';
 import { toast } from 'react-hot-toast';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
 import { FormInput } from '../input/formInput';
@@ -43,7 +43,7 @@ export function AddTransaction({ setState }: AddTransactionType) {
 
     const url = `${serverAddress}/transaction/add`;
 
-    const data = await fetch(url, postReq(transactionInfo))
+    const data = await fetch(url, serverReq('POST', transactionInfo))
       .then((res) => res.json())
       .catch((err) => toast.error(JSON.stringify(err)));
 
