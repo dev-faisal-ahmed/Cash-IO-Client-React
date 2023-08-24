@@ -18,6 +18,7 @@ export default function TransactionModal({
   date,
   type,
   description,
+  wallet,
 }: TransactionModalType) {
   const [show, setShow] = useState<'detail' | 'edit'>('detail');
 
@@ -52,6 +53,7 @@ export default function TransactionModal({
           date={date}
           type={type}
           description={description}
+          wallet={wallet}
         />
       )}
       {show === 'edit' && (
@@ -63,6 +65,7 @@ export default function TransactionModal({
           date={date}
           type={type}
           description={description}
+          wallet={wallet}
         />
       )}
     </Modal>

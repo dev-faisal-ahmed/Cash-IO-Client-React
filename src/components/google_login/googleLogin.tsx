@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../../utils/stores/userReducer';
 import { serverAddress } from '../../utils/serverAddress';
-import { postReq } from '../../utils/serverReq';
+import { serverReq } from '../../utils/serverReq';
 import { toast } from 'react-hot-toast';
 import { LoadingSpinner } from '../loadingSpinner';
 
@@ -28,7 +28,7 @@ export function GoogleLogin() {
         const user = result.user;
         const url = `${serverAddress}/google-login`;
         const userInfo = { name: user.displayName, email: user.email };
-        fetch(url, postReq(userInfo))
+        fetch(url, serverReq('POST', userInfo))
           // checking if user exists or not, if user does not exist create a new one to the database
           .then((res) => res.json())
           .then((res) => {
@@ -57,7 +57,7 @@ export function GoogleLogin() {
   return (
     <div className='center-xy animation cursor-pointer gap-3 rounded-md bg-gray-300 px-5 py-2 font-semibold hover:bg-gray-400 '>
       {loading ? (
-        <div className='h-10 py-1'>
+        <div className='h-8 py-1'>
           <LoadingSpinner />
         </div>
       ) : (

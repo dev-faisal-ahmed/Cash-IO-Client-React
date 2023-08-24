@@ -1,10 +1,9 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { TransactionModalFormType, StoreType } from '../../utils/types';
+import { FromType, StoreType } from '../../utils/types';
 import { serverAddress } from '../../utils/serverAddress';
-import { postReq } from '../../utils/serverReq';
+import { serverReq } from '../../utils/serverReq';
 import { toast } from 'react-hot-toast';
-import { useGetSummary } from '../../hooks/useGetSummary';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
 import { FormInput } from '../input/formInput';
 import { useForm } from 'react-hook-form';
@@ -12,42 +11,45 @@ import { FormOptionInput } from '../input/formOptionInput';
 import { FormComplexInput } from '../input/formComplexInput';
 import { FormTextArea } from '../input/formTextArea';
 import { useGetCategory } from '../../hooks/useGetCategory';
+import { useGetWallets } from '../../hooks/useGetWallets';
+import { getWalletName } from '../../utils/helper';
 
 type AddTransactionType = {
   setState: Dispatch<SetStateAction<boolean>>;
 };
 export function AddTransaction({ setState }: AddTransactionType) {
-  const user = useSelector((state: StoreType) => state.user);
-  const { fetchSummary } = useGetSummary(user.email as string);
-  const { fetchTransactions } = useGetTransaction(user.email as string);
+  const { email } = useSelector((state: StoreType) => state.user);
+  const { fetchWallets, wallets } = useGetWallets(email as string);
+  const { fetchTransactions } = useGetTransaction(email as string);
   const [loading, setLoading] = useState<boolean>(false);
-  const { register, handleSubmit, reset } = useForm<TransactionModalFormType>();
+  const { register, handleSubmit, reset } = useForm<FromType>();
   const { categories } = useGetCategory();
 
   //  transaction handler
-  async function handleAddTransaction(fromData: TransactionModalFormType) {
+  async function handleAddTransaction(fromData: FromType) {
     setLoading(true);
     const toastId = toast.loading('Adding Transaction ...');
-    const { amount, category, date, description, type } = fromData;
+    const { amount, category, date, description, type, wallet } = fromData;
 
     const transactionInfo = {
-      email: user.email,
+      email: email,
       amount: parseInt(amount),
       date: new Date(date),
       category,
       type,
       description,
+      wallet,
     };
 
     const url = `${serverAddress}/transaction/add`;
 
-    const data = await fetch(url, postReq(transactionInfo))
+    const data = await fetch(url, serverReq('POST', transactionInfo))
       .then((res) => res.json())
       .catch((err) => toast.error(JSON.stringify(err)));
 
     if (data?.okay) {
       toast.success(data?.msg);
-      fetchSummary();
+      fetchWallets();
       fetchTransactions();
     } else toast.error(data?.msg);
 
@@ -80,14 +82,20 @@ export function AddTransaction({ setState }: AddTransactionType) {
           options={['expense', 'revenue']}
           register={register}
         />
-        <FormComplexInput
-          title='Category'
-          name='category'
-          options={categories as string[]}
-          placeholder='Select Category'
+        <FormOptionInput
+          title='Wallet'
+          name='wallet'
+          options={getWalletName(wallets)}
           register={register}
         />
       </div>
+      <FormComplexInput
+        title='Category'
+        name='category'
+        options={categories as string[]}
+        placeholder='Select Category'
+        register={register}
+      />
       <FormTextArea
         title='Description'
         name='description'
@@ -95,10 +103,7 @@ export function AddTransaction({ setState }: AddTransactionType) {
         register={register}
       />
       <hr />
-      <button
-        disabled={loading}
-        className='rounded-md border-2 border-blue-500 bg-blue-500 px-5 py-2 font-semibold text-white hover:bg-transparent hover:text-blue-500 disabled:cursor-not-allowed disabled:bg-gray-300'
-      >
+      <button disabled={loading} className='button-primary'>
         + Add
       </button>
     </form>

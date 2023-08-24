@@ -1,17 +1,9 @@
-export function postReq(body: object) {
+export function serverReq(
+  method: 'POST' | 'DELETE' | 'PATCH' | 'PUT',
+  body: object,
+) {
   return {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-  };
-}
-
-export function deleteReq(body: object) {
-  return {
-    method: 'DELETE',
+    method: method,
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',

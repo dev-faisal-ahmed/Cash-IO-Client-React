@@ -1,18 +1,17 @@
 import { useSelector } from 'react-redux';
 import { Summary } from './summary/summary';
 import { StoreType } from '../../utils/types';
-import { useGetSummary } from '../../hooks/useGetSummary';
 import { useEffect } from 'react';
 import { GraphChart } from './graph/graphChart';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
 import { LoadingSpinner } from '../../components/loadingSpinner';
 import { Transaction } from '../../components/transaction/transaction';
+import { useGetWallets } from '../../hooks/useGetWallets';
 
 export function HomePage() {
   const { email } = useSelector((state: StoreType) => state.user);
-  const { balance, expense, revenue, fetchSummary, isLoading } = useGetSummary(
-    email as string,
-  );
+  const { fetchWallets, loading, wallets } = useGetWallets(email as string);
+
   const {
     transactions,
     fetchTransactions,
@@ -20,24 +19,24 @@ export function HomePage() {
   } = useGetTransaction(email as string);
 
   useEffect(() => {
-    fetchSummary();
     fetchTransactions();
+    fetchWallets();
   }, []);
 
-  if (isLoading || transactionLoading) {
+  if (loading || transactionLoading) {
     return <LoadingSpinner />;
   }
 
   return (
     <section className='t-5'>
       {/* summary */}
-      <Summary balance={balance} expense={expense} revenue={revenue} />
+      <Summary wallets={wallets} />
       {/* charts */}
       <GraphChart />
       <section className='mt-10 '>
         <h1 className='mb-4 font-semibold'>Latest Transactions</h1>
         {/* transactions */}
-        <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3'>
+        <div className='page-grid'>
           {transactions
             ?.slice(0, 9)
             .map((transaction, index) => (
@@ -49,6 +48,7 @@ export function HomePage() {
                 type={transaction.type}
                 _id={transaction._id}
                 description={transaction.description}
+                wallet={transaction.wallet}
               />
             ))}
         </div>

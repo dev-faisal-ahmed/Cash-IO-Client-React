@@ -5,7 +5,7 @@ type LoadingSpinnerType = {
 };
 
 export function LoadingSpinner({
-  size = 'h-10 w-10',
+  size = 'h-8 w-8',
   innerBg = 'border-gray-400',
   outerBg = 'border-blue-500',
 }: LoadingSpinnerType) {

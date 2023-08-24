@@ -5,7 +5,7 @@ import { BiSolidWallet } from 'react-icons/bi';
 
 type MobileNavLinkType = {
   path: string;
-  title: 'Home' | 'Profile' | 'Transactions';
+  title: 'Home' | 'Wallet' | 'Transactions';
   currentLink: string;
 };
 
@@ -22,7 +22,7 @@ export const MobileNavLink = ({
       to={path}
     >
       {title === 'Home' && <GoHomeFill size={25} />}
-      {title === 'Profile' && <FaUserSecret size={25} />}
+      {title === 'Wallet' && <FaUserSecret size={25} />}
       {title === 'Transactions' && <BiSolidWallet size={25} />}
       <span className='text-xs'>{title}</span>
     </Link>

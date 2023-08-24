@@ -1,5 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
-import { TransactionModalFormType } from '../../utils/types';
+import { FromType } from '../../utils/types';
 
 type FormComplexInputType = {
   title: string;
@@ -7,7 +7,7 @@ type FormComplexInputType = {
   placeholder: string;
   options: string[] | null;
   defaultValue?: string;
-  register: UseFormRegister<TransactionModalFormType>;
+  register: UseFormRegister<FromType>;
 };
 
 export function FormComplexInput({

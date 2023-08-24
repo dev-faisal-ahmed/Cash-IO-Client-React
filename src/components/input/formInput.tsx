@@ -1,5 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
-import { TransactionModalFormType } from '../../utils/types';
+import { FromType } from '../../utils/types';
 
 type FormComponentType = {
   name: string;
@@ -7,7 +7,7 @@ type FormComponentType = {
   type: string;
   placeholder?: string;
   defaultValue?: string | number;
-  register: UseFormRegister<TransactionModalFormType>;
+  register: UseFormRegister<FromType>;
 };
 
 export function FormInput({

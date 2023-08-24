@@ -5,7 +5,8 @@ import { GiWallet } from 'react-icons/gi';
 import TransactionModal from './transactionModal';
 
 export function Transaction(transaction: TransactionType) {
-  const { amount, category, date, type, _id, description } = transaction;
+  const { amount, category, date, type, _id, description, wallet } =
+    transaction;
   const [openModal, setOpenModal] = useState<boolean>(false);
   return (
     <div className='flex items-center gap-5 rounded-md bg-white p-5'>
@@ -51,6 +52,7 @@ export function Transaction(transaction: TransactionType) {
         state={openModal}
         description={description}
         setState={setOpenModal}
+        wallet={wallet}
       />
     </div>
   );

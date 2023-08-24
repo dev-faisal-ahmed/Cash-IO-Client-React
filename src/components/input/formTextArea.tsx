@@ -1,12 +1,12 @@
 import { UseFormRegister } from 'react-hook-form';
-import { TransactionModalFormType } from '../../utils/types';
+import { FromType } from '../../utils/types';
 
 type FormTextAreaType = {
   title: string;
   name: string;
   placeholder: string;
   defaultValue?: string;
-  register: UseFormRegister<TransactionModalFormType>;
+  register: UseFormRegister<FromType>;
 };
 
 export function FormTextArea({

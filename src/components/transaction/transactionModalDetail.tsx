@@ -4,12 +4,12 @@ import { StoreType, TransactionType } from '../../utils/types';
 import { IoIosWallet } from 'react-icons/io';
 import { FaTrash } from 'react-icons/fa6';
 import { serverAddress } from '../../utils/serverAddress';
-import { deleteReq } from '../../utils/serverReq';
+import { serverReq } from '../../utils/serverReq';
 import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
-import { useGetSummary } from '../../hooks/useGetSummary';
+import { useGetWallets } from '../../hooks/useGetWallets';
 
 // type
 type TransactionDetailType = TransactionType & {
@@ -25,12 +25,13 @@ export function TransactionModalDetail({
   type,
   description,
   setModalState,
+  wallet,
 }: TransactionDetailType) {
   const { email } = useSelector((state: StoreType) => state.user);
   const { fetchTransactions, transactions } = useGetTransaction(
     email as string,
   );
-  const { fetchSummary } = useGetSummary(email as string);
+  const { fetchWallets } = useGetWallets(email as string);
   const [loading, setLoading] = useState<boolean>(false);
 
   // functions
@@ -40,14 +41,14 @@ export function TransactionModalDetail({
     try {
       const response = await fetch(
         `${serverAddress}/delete-transaction`,
-        deleteReq({ _id, email, type, amount }),
+        serverReq('DELETE', { _id, email, type, amount, wallet }),
       ).then((res) => res.json());
 
       if (response.okay) {
         toast.success(response.msg);
         fetchTransactions();
         console.log(transactions);
-        fetchSummary();
+        fetchWallets();
       } else toast.error(response.msg);
 
       toast.dismiss(toastId);

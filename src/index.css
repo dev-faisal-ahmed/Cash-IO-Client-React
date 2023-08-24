@@ -58,4 +58,16 @@ body {
   .button {
     @apply px-5 py-2;
   }
+  .button-primary {
+    @apply rounded-md border-2 border-blue-500 bg-blue-500 px-5 py-2 font-semibold text-white hover:bg-transparent hover:text-blue-500 disabled:cursor-not-allowed disabled:bg-gray-300;
+  }
+  .flex-down {
+    @apply flex flex-col;
+  }
+  .page-grid {
+    @apply grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3;
+  }
+  .button-disabled {
+    @apply disabled:cursor-not-allowed disabled:border-transparent disabled:bg-gray-500;
+  }
 }
