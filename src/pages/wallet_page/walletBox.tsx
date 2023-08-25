@@ -6,15 +6,22 @@ import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { Modal } from '../../components/modal/modal';
 import { EditWallet } from './editWallet';
+import { TransferWallet } from './transferWallet';
 
 export function WalletBox({ name, revenue, expense }: WalletType) {
   const [showWalletMenu, setShowWalletMenu] = useState<boolean>(false);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [showTransferModal, setShowTransferModal] = useState<boolean>(false);
   const ref = useOutsideClick(() => setShowWalletMenu(false));
 
   function handleShowEditModal() {
     setShowWalletMenu(false);
     setShowEditModal(true);
+  }
+
+  function handleShowTransferModal() {
+    setShowWalletMenu(false);
+    setShowTransferModal(true);
   }
 
   return (
@@ -46,7 +53,10 @@ export function WalletBox({ name, revenue, expense }: WalletType) {
               >
                 <TbEdit size={20} /> Edit
               </p>
-              <p className='flex cursor-pointer gap-3 px-3 py-1 hover:bg-gray-200'>
+              <p
+                onClick={handleShowTransferModal}
+                className='flex cursor-pointer gap-3 px-3 py-1 hover:bg-gray-200'
+              >
                 <TbArrowsExchange size={20} /> Transfer
               </p>
               <p className='flex cursor-pointer gap-3 px-3 py-1 hover:bg-gray-200'>
@@ -72,13 +82,26 @@ export function WalletBox({ name, revenue, expense }: WalletType) {
           <span>{expense} &#2547;</span>
         </p>
       </div>
-      {/* modals */}
+      {/* ------ modals ------ */}
+      {/* Edit Wallet */}
       <Modal
         title={`Edit Wallet's Name`}
         openModal={showEditModal}
         setOpenModal={setShowEditModal}
       >
         <EditWallet setModalState={setShowEditModal} name={name} />
+      </Modal>
+      {/* Transfer money */}
+      <Modal
+        title='Transfer Money'
+        openModal={showTransferModal}
+        setOpenModal={setShowTransferModal}
+      >
+        <TransferWallet
+          balance={revenue - expense}
+          fromWalletName={name}
+          setModalState={setShowTransferModal}
+        />
       </Modal>
     </>
   );
