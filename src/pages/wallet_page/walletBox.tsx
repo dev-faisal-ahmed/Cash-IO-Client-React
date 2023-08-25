@@ -7,11 +7,14 @@ import { AiTwotoneDelete } from 'react-icons/ai';
 import { Modal } from '../../components/modal/modal';
 import { EditWallet } from './editWallet';
 import { TransferWallet } from './transferWallet';
+import { DeleteWallet } from './deleteWallet';
 
 export function WalletBox({ name, revenue, expense }: WalletType) {
   const [showWalletMenu, setShowWalletMenu] = useState<boolean>(false);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [showTransferModal, setShowTransferModal] = useState<boolean>(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+
   const ref = useOutsideClick(() => setShowWalletMenu(false));
 
   function handleShowEditModal() {
@@ -22,6 +25,11 @@ export function WalletBox({ name, revenue, expense }: WalletType) {
   function handleShowTransferModal() {
     setShowWalletMenu(false);
     setShowTransferModal(true);
+  }
+
+  function handleShowDeleteModal() {
+    setShowWalletMenu(false);
+    setShowDeleteModal(true);
   }
 
   return (
@@ -59,7 +67,10 @@ export function WalletBox({ name, revenue, expense }: WalletType) {
               >
                 <TbArrowsExchange size={20} /> Transfer
               </p>
-              <p className='flex cursor-pointer gap-3 px-3 py-1 hover:bg-gray-200'>
+              <p
+                onClick={handleShowDeleteModal}
+                className='flex cursor-pointer gap-3 px-3 py-1 hover:bg-gray-200'
+              >
                 <AiTwotoneDelete size={20} /> Delete
               </p>
             </div>
@@ -101,6 +112,18 @@ export function WalletBox({ name, revenue, expense }: WalletType) {
           balance={revenue - expense}
           fromWalletName={name}
           setModalState={setShowTransferModal}
+        />
+      </Modal>
+      <Modal
+        title='Are you sure?'
+        openModal={showDeleteModal}
+        setOpenModal={setShowDeleteModal}
+        width='450px'
+      >
+        <DeleteWallet
+          name={name}
+          balance={revenue - expense}
+          setState={setShowDeleteModal}
         />
       </Modal>
     </>
