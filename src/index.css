@@ -68,6 +68,6 @@ body {
     @apply grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3;
   }
   .button-disabled {
-    @apply disabled:cursor-not-allowed disabled:border-2 disabled:border-gray-500 disabled:bg-gray-500;
+    @apply disabled:cursor-not-allowed disabled:border-gray-500 disabled:bg-gray-500;
   }
 }
