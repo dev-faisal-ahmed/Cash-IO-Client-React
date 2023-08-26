@@ -10,6 +10,7 @@ import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
 import { useGetWallets } from '../../hooks/useGetWallets';
+import { BiSolidWallet } from 'react-icons/bi';
 
 // type
 type TransactionDetailType = TransactionType & {
@@ -60,15 +61,20 @@ export function TransactionModalDetail({
     setModalState(false);
   }
 
+  console.log(type);
+
   return (
-    <div className='mt-8 flex gap-5 rounded-md border bg-white p-5'>
+    <div className='flex gap-5 rounded-md border bg-white p-5'>
       <div
         className={`rounded-md p-3 ${
           type === 'revenue' && 'bg-green-100 text-green-600'
-        } ${type === 'expense' && 'bg-red-100 text-red-600'}`}
+        } ${type === 'expense' && 'bg-red-100 text-red-600'} ${
+          type === 'transfer' && 'bg-orange-100 text-orange-600'
+        }`}
       >
         {type === 'revenue' && <GiWallet size={60} />}
         {type === 'expense' && <IoIosWallet size={60} />}
+        {type === 'transfer' && <BiSolidWallet size={60} />}
       </div>
       <div className='w-full'>
         <h3 className='mb-1 truncate text-sm font-semibold'>{category}</h3>
@@ -88,7 +94,7 @@ export function TransactionModalDetail({
             {type === 'expense' && '-'}
             {amount}
           </h2>
-          {!loading && (
+          {!loading && type !== 'transfer' && (
             <div
               onClick={handleDeleteTransaction}
               className='cursor-pointer rounded-md bg-red-100 p-2 text-red-600'

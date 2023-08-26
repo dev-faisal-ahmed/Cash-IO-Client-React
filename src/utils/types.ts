@@ -22,7 +22,7 @@ export type TransactionType = {
   amount: number;
   date: Date;
   category: string;
-  type: 'expense' | 'revenue';
+  type: 'expense' | 'revenue' | 'transfer';
   description?: string;
   wallet: string;
 };

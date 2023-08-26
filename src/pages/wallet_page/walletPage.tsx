@@ -39,7 +39,7 @@ export function WalletPage() {
         openModal={showAddWalletModal}
         setOpenModal={setShowAddWalletModal}
       >
-        <AddWallet />
+        <AddWallet setState={setShowAddWalletModal} />
       </Modal>
     </section>
   );

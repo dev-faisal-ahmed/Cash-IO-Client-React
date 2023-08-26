@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormInput } from '../../components/input/formInput';
 import { FromType, StoreType } from '../../utils/types';
@@ -9,7 +9,11 @@ import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useGetWallets } from '../../hooks/useGetWallets';
 
-export const AddWallet = () => {
+type AddWalletType = {
+  setState: Dispatch<SetStateAction<boolean>>;
+};
+
+export const AddWallet = ({ setState }: AddWalletType) => {
   const { register, handleSubmit, reset } = useForm<FromType>();
   const { email } = useSelector((store: StoreType) => store.user);
   const { fetchWallets } = useGetWallets(email as string);
@@ -19,22 +23,26 @@ export const AddWallet = () => {
     setLoading(true);
     const toastId = toast.loading('Adding Wallet ...');
     const { amount, wallet } = data;
-    try {
-      const response = await fetch(
-        `${serverAddress}/add-wallet`,
-        serverReq('POST', { revenue: parseInt(amount), name: wallet, email }),
-      ).then((res) => res.json());
-      if (response.okay) {
-        toast.success(response.msg, { duration: 1000 });
-        fetchWallets();
-      } else toast.error(response.msg, { duration: 1000 });
-    } catch (err) {
-      toast.error(JSON.stringify(err), { duration: 1000 });
-    }
 
-    toast.dismiss(toastId);
-    setLoading(false);
-    reset();
+    fetch(
+      `${serverAddress}/add-wallet`,
+      serverReq('POST', { revenue: parseInt(amount), name: wallet, email }),
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        toast.dismiss(toastId);
+        setLoading(false);
+        reset();
+        if (res.okay) {
+          fetchWallets();
+          setState(false);
+        }
+      })
+      .catch(() => {
+        toast.error('Something went wrong', { duration: 1000 });
+        toast.dismiss(toastId);
+        setLoading(false);
+      });
   }
 
   return (

@@ -24,26 +24,32 @@ export default function TransactionModal({
 
   return (
     <Modal openModal={state} setOpenModal={setState} title='Transaction Detail'>
-      <div className='mx-auto grid w-fit grid-cols-2 rounded-md border'>
-        <button
-          onClick={() => setShow('detail')}
-          className={`rounded px-5 py-2 ${
-            show === 'detail'
-              ? 'bg-blue-500 text-white shadow'
-              : 'text-gray-500'
-          }`}
-        >
-          Detail
-        </button>
-        <button
-          onClick={() => setShow('edit')}
-          className={`rounded px-5 py-2 ${
-            show === 'edit' ? 'bg-blue-500 text-white shadow' : 'text-gray-500'
-          }`}
-        >
-          Edit
-        </button>
-      </div>
+      {type !== 'transfer' && (
+        <div className='mx-auto mb-5 grid w-fit grid-cols-2 rounded-md border'>
+          <button
+            onClick={() => setShow('detail')}
+            className={`rounded px-5 py-2 ${
+              show === 'detail'
+                ? 'bg-blue-500 text-white shadow'
+                : 'text-gray-500'
+            }`}
+          >
+            Detail
+          </button>
+
+          <button
+            onClick={() => setShow('edit')}
+            className={`rounded px-5 py-2 ${
+              show === 'edit'
+                ? 'bg-blue-500 text-white shadow'
+                : 'text-gray-500'
+            }`}
+          >
+            Edit
+          </button>
+        </div>
+      )}
+
       {show === 'detail' && (
         <TransactionModalDetail
           _id={_id}
@@ -56,7 +62,7 @@ export default function TransactionModal({
           wallet={wallet}
         />
       )}
-      {show === 'edit' && (
+      {show === 'edit' && type !== 'transfer' && (
         <TransactionModalForm
           _id={_id}
           setModalState={setState}

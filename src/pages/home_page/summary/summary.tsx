@@ -21,8 +21,10 @@ export function Summary({ wallets }: SummaryType) {
             onChange={(e) => setWalletName(e.target.value)}
             className='cursor-pointer outline-none'
           >
-            {walletsName.map((name: string) => (
-              <option value={name}>{name}</option>
+            {walletsName.map((name: string, index) => (
+              <option key={index} value={name}>
+                {name}
+              </option>
             ))}
           </select>
         </div>
