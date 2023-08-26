@@ -50,3 +50,7 @@ export type FromType = {
   date: Date;
   wallet: string;
 };
+
+export type WalletMapType = {
+  [key: string]: WalletType;
+};
