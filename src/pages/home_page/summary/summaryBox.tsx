@@ -1,52 +1,31 @@
-import { MiniBox } from './miniBox';
+import { BiSolidWallet } from 'react-icons/bi';
+import { GiWallet } from 'react-icons/gi';
+import { HiMiniWallet } from 'react-icons/hi2';
 
 type SummaryBoxType = {
-  data: {
-    name: string;
-    revenue: number;
-    expense: number;
-  }[];
+  value: number;
   title: 'Balance' | 'Earnings' | 'Expenses';
 };
 
-export function SummaryBox({ title, data }: SummaryBoxType) {
-  let total = 0;
+export function SummaryBox({ title, value }: SummaryBoxType) {
   return (
-    <div
-      className={`gap-5 rounded-lg p-8 text-white shadow-md ${
-        title === 'Balance' && 'bg-blue-600'
-      } ${title === 'Earnings' && 'bg-green-600'} ${
-        title === 'Expenses' && 'bg-red-600'
-      }`}
-    >
-      <h2 className='mb-2 text-2xl font-semibold'>{title}</h2>
-      <div className='flex flex-col gap-1 text-gray-100'>
-        {data.map((info, index) => {
-          total +=
-            title === 'Balance'
-              ? info.revenue - info.expense
-              : title === 'Earnings'
-              ? info.revenue
-              : title === 'Expenses'
-              ? info.expense
-              : 0;
-          return (
-            <MiniBox
-              key={index}
-              name={info.name}
-              value={
-                title === 'Balance'
-                  ? (info.revenue | 0) - (info.expense | 0)
-                  : title === 'Expenses'
-                  ? info.expense
-                  : title === 'Earnings'
-                  ? info.revenue
-                  : 0
-              }
-            />
-          );
-        })}
-        <MiniBox name={'Total'} value={total} />
+    <div className='flex gap-5 rounded-lg bg-white p-6'>
+      <div
+        className={`center-xy rounded-md  p-3 ${
+          title === 'Balance' && 'bg-blue-100 text-blue-600'
+        } ${title === 'Earnings' && 'bg-green-100 text-green-600'} ${
+          title === 'Expenses' && 'bg-red-100 text-red-600'
+        }`}
+      >
+        {title === 'Balance' && <BiSolidWallet size={40} />}
+        {title === 'Earnings' && <GiWallet size={40} />}
+        {title === 'Expenses' && <HiMiniWallet size={40} />}
+      </div>
+      <div>
+        <h2 className='mb-1 text-2xl font-semibold text-blue-950'>
+          {value} &#2547;
+        </h2>
+        <p className='text-sm text-gray-500'>{title}</p>
       </div>
     </div>
   );

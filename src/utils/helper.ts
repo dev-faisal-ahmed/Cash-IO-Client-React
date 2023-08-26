@@ -1,4 +1,4 @@
-import { TransactionType, WalletType } from './types';
+import { TransactionType, WalletMapType, WalletType } from './types';
 
 // this function will create a object with where it's key will be a date and value will be the transaction object
 export function getTransactionMap(transactions: TransactionType[]) {
@@ -66,4 +66,27 @@ export function getDailyTransactions(
 
 export function getWalletName(wallets: WalletType[]) {
   return wallets.map((wallet) => wallet.name);
+}
+
+export function getWalletMap(wallets: WalletType[]) {
+  const walletsMap: WalletMapType = {};
+  const length = wallets.length;
+  const keys: string[] = ['All'];
+  let revenue = 0;
+  let expense = 0;
+
+  for (let i = 0; i < length; i++) {
+    walletsMap[wallets[i].name] = wallets[i];
+    keys.push(wallets[i].name);
+    revenue += wallets[i].revenue;
+    expense += wallets[i].expense;
+  }
+
+  walletsMap['All'] = {
+    name: 'All',
+    revenue: revenue,
+    expense: expense,
+  };
+
+  return { keys, walletsMap };
 }

@@ -77,7 +77,7 @@ export function WalletBox({ name, revenue, expense }: WalletType) {
           )}
         </div>
         <p
-          className={`between-y ${
+          className={`between-y mb-1 ${
             name === 'Cash' ? 'text-gray-100' : 'text-gray-500'
           }`}
         >
@@ -85,12 +85,20 @@ export function WalletBox({ name, revenue, expense }: WalletType) {
           <span>{revenue} &#2547;</span>
         </p>
         <p
-          className={`between-y ${
+          className={`between-y mb-1 ${
             name === 'Cash' ? 'text-gray-100' : 'text-gray-500'
           }`}
         >
           <span>Expense</span>
           <span>{expense} &#2547;</span>
+        </p>
+        <p
+          className={`between-y ${
+            name === 'Cash' ? 'text-gray-100' : 'text-gray-500'
+          }`}
+        >
+          <span>Balance</span>
+          <span>{revenue - expense} &#2547;</span>
         </p>
       </div>
       {/* ------ modals ------ */}

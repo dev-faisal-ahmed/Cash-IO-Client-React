@@ -3,6 +3,7 @@ import { TransactionType } from '../../utils/types';
 import { IoIosWallet } from 'react-icons/io';
 import { GiWallet } from 'react-icons/gi';
 import TransactionModal from './transactionModal';
+import { BiSolidWallet } from 'react-icons/bi';
 
 export function Transaction(transaction: TransactionType) {
   const { amount, category, date, type, _id, description, wallet } =
@@ -13,10 +14,13 @@ export function Transaction(transaction: TransactionType) {
       <div
         className={`rounded-md p-3 ${
           type === 'revenue' && 'bg-green-100 text-green-600'
-        } ${type === 'expense' && 'bg-red-100 text-red-600'}`}
+        } ${type === 'expense' && 'bg-red-100 text-red-600'} ${
+          type === 'transfer' && 'bg-orange-100 text-orange-600'
+        }`}
       >
         {type === 'revenue' && <GiWallet size={30} />}
         {type === 'expense' && <IoIosWallet size={30} />}
+        {type === 'transfer' && <BiSolidWallet size={30} />}
       </div>
       <div className='w-full'>
         <h3 className='mb-1 truncate text-sm font-semibold'>{category}</h3>
@@ -29,10 +33,13 @@ export function Transaction(transaction: TransactionType) {
           <h2
             className={`ml-auto font-semibold ${
               type === 'revenue' && 'text-green-600'
-            } ${type === 'expense' && 'text-red-600'}`}
+            } ${type === 'expense' && 'text-red-600'} ${
+              type === 'transfer' && 'text-orange-600'
+            }`}
           >
             {type === 'revenue' && '+'}
             {type === 'expense' && '-'}
+
             {amount}
           </h2>
           <button
