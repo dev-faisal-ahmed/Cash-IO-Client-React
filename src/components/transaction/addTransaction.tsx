@@ -1,18 +1,17 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
-import { FromType, StoreType } from '../../utils/types';
+import { StoreType } from '../../utils/types';
 import { serverAddress } from '../../utils/serverAddress';
 import { serverReq } from '../../utils/serverReq';
 import { toast } from 'react-hot-toast';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
-import { FormInput } from '../input/formInput';
-import { useForm } from 'react-hook-form';
-import { FormOptionInput } from '../input/formOptionInput';
-import { FormComplexInput } from '../input/formComplexInput';
-import { FormTextArea } from '../input/formTextArea';
-import { useGetCategory } from '../../hooks/useGetCategory';
 import { useGetWallets } from '../../hooks/useGetWallets';
 import { getWalletName } from '../../utils/helper';
+import { Input } from '../input/input';
+import { Select } from '../input/select';
+import { categoriesData } from '../../data/categories';
+import { ComplexSelect } from '../input/complexSelect';
+import { TextArea } from '../input/textArea';
 
 type AddTransactionType = {
   setState: Dispatch<SetStateAction<boolean>>;
@@ -21,15 +20,41 @@ export function AddTransaction({ setState }: AddTransactionType) {
   const { email } = useSelector((state: StoreType) => state.user);
   const { fetchWallets, wallets } = useGetWallets(email as string);
   const { fetchTransactions } = useGetTransaction(email as string);
+  // const { categories } = useGetCategory();
+  const [transactionType, setTransactionType] = useState('');
+  const [selectedWallet, setSelectedWallet] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [loading, setLoading] = useState<boolean>(false);
-  const { register, handleSubmit, reset } = useForm<FromType>();
-  const { categories } = useGetCategory();
+
+  function onTransactionTypeSelection(option: string) {
+    setTransactionType(option);
+  }
+  function onWalletSelection(option: string) {
+    setSelectedWallet(option);
+  }
+  function onCategorySelection(option: string) {
+    setSelectedCategory(option);
+  }
 
   //  transaction handler
-  async function handleAddTransaction(fromData: FromType) {
+  async function handleAddTransaction(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.target as typeof event.target & {
+      amount: { value: string }; // this has to be a number
+      date: { value: string }; // this has to be a date
+      description: { value: string };
+    };
+
     setLoading(true);
+
+    const amount = form.amount.value;
+    const date = form.date.value;
+    const description = form.description.value;
+    const type = transactionType;
+    const wallet = selectedWallet;
+    const category = selectedCategory;
+
     const toastId = toast.loading('Adding Transaction ...');
-    const { amount, category, date, description, type, wallet } = fromData;
 
     const transactionInfo = {
       email: email,
@@ -55,52 +80,51 @@ export function AddTransaction({ setState }: AddTransactionType) {
 
     setLoading(false);
     toast.dismiss(toastId);
-    reset();
     setState(false);
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(handleAddTransaction)}
-      className='mt-5 flex flex-col gap-4'
-    >
+    <form onSubmit={handleAddTransaction} className='mt-5 flex flex-col gap-4'>
       <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5'>
-        <FormInput
+        <Input
           title='Amount'
           name='amount'
-          register={register}
           type='number'
           placeholder='Enter Amount'
+          required
         />
 
-        <FormInput title='Date' name='date' register={register} type='date' />
+        <Input title='Date' name='date' type='date' required />
       </div>
       <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5'>
-        <FormOptionInput
+        <Select
           title='Transaction Type'
-          name='type'
           options={['expense', 'revenue']}
-          register={register}
+          placeholder='Select Type'
+          selectedOption={transactionType}
+          onSelection={onTransactionTypeSelection}
         />
-        <FormOptionInput
+
+        <Select
           title='Wallet'
-          name='wallet'
           options={getWalletName(wallets)}
-          register={register}
+          placeholder='Select Wallet'
+          selectedOption={selectedWallet}
+          onSelection={onWalletSelection}
         />
       </div>
-      <FormComplexInput
+      <ComplexSelect
+        selectedOption={selectedCategory}
+        onSelection={onCategorySelection}
+        options={categoriesData.expense}
+        placeholder={'Select Category'}
         title='Category'
-        name='category'
-        options={categories as string[]}
-        placeholder='Select Category'
-        register={register}
       />
-      <FormTextArea
+      <TextArea
         title='Description'
         name='description'
         placeholder='Write a short description'
-        register={register}
+        required
       />
       <hr />
       <button disabled={loading} className='button-primary'>

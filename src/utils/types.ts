@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export type UserInfoType = {
   name: string | null;
   email: string | null;
@@ -53,4 +55,9 @@ export type FromType = {
 
 export type WalletMapType = {
   [key: string]: WalletType;
+};
+
+export type IconOptionType = {
+  title: string;
+  icon: ReactNode;
 };
