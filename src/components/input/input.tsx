@@ -1,23 +1,20 @@
-import { UseFormRegister } from 'react-hook-form';
-import { FromType } from '../../utils/types';
-
-type FormComponentType = {
+type InputProps = {
   name: string;
   title: string;
   type: string;
   placeholder?: string;
   defaultValue?: string | number;
-  register: UseFormRegister<FromType>;
+  required?: boolean;
 };
 
-export function FormInput({
+export function Input({
+  name,
   title,
   type,
-  name,
   placeholder,
-  register,
   defaultValue,
-}: FormComponentType) {
+  required,
+}: InputProps) {
   return (
     <div className='flex w-full flex-col gap-1'>
       <label className='font-semibold' htmlFor={name}>
@@ -25,14 +22,13 @@ export function FormInput({
       </label>
       <input
         className='w-full rounded-md border border-gray-400 px-3 py-2 outline-none'
+        autoComplete='off'
         type={type}
         defaultValue={defaultValue}
+        name={name}
         id={name}
         placeholder={placeholder}
-        {...register(
-          name as 'type' | 'amount' | 'description' | 'category' | 'date',
-        )}
-        required
+        required={required}
       />
     </div>
   );

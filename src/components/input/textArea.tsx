@@ -1,20 +1,17 @@
-import { UseFormRegister } from 'react-hook-form';
-import { FromType } from '../../utils/types';
-
 type FormTextAreaType = {
   title: string;
   name: string;
   placeholder: string;
   defaultValue?: string;
-  register: UseFormRegister<FromType>;
+  required?: boolean;
 };
 
-export function FormTextArea({
+export function TextArea({
   title,
   name,
   placeholder,
   defaultValue,
-  register,
+  required,
 }: FormTextAreaType) {
   return (
     <div className='flex w-full flex-col gap-1'>
@@ -26,9 +23,8 @@ export function FormTextArea({
         className='w-full rounded-md border border-gray-400 px-3 py-2 outline-none'
         id={name}
         placeholder={placeholder}
-        {...register(name as 'description')}
         defaultValue={defaultValue}
-        required
+        required={required}
       />
     </div>
   );
