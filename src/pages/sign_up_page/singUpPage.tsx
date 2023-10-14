@@ -24,7 +24,7 @@ export function SingUpPage() {
     event.preventDefault();
     const toastId = toast.loading('Creating Your Account');
     setLoading(true);
-    const target = event.target as typeof event.target & {
+    const target = event.target as HTMLFormElement & {
       name: { value: string };
       email: { value: string };
       password: { value: string };

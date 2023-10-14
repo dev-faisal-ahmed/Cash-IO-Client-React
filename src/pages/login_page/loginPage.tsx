@@ -19,7 +19,7 @@ export function LoginPage() {
     event.preventDefault();
     setLoading(true);
     const toastId = toast.loading('Logging in ...');
-    const target = event.target as typeof event.target & {
+    const target = event.target as HTMLFormElement & {
       email: { value: string };
       password: { value: string };
     };

@@ -1,28 +1,33 @@
-import { useState, Dispatch, SetStateAction } from 'react';
-import { useForm } from 'react-hook-form';
-import { FormInput } from '../../components/input/formInput';
-import { FromType, StoreType } from '../../utils/types';
+import { useState, Dispatch, SetStateAction, FormEvent } from 'react';
+import { StoreType } from '../../utils/types';
 import { twMerge } from 'tailwind-merge';
 import { serverAddress } from '../../utils/serverAddress';
 import { serverReq } from '../../utils/serverReq';
 import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useGetWallets } from '../../hooks/useGetWallets';
+import { Input } from '../../components/input/input';
 
 type AddWalletType = {
   setState: Dispatch<SetStateAction<boolean>>;
 };
 
 export const AddWallet = ({ setState }: AddWalletType) => {
-  const { register, handleSubmit, reset } = useForm<FromType>();
   const { email } = useSelector((store: StoreType) => store.user);
   const { fetchWallets } = useGetWallets(email as string);
   const [loading, setLoading] = useState<boolean>(false);
 
-  async function onAddWallet(data: FromType) {
+  async function onAddWallet(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     setLoading(true);
     const toastId = toast.loading('Adding Wallet ...');
-    const { amount, wallet } = data;
+    const form = event.target as HTMLFormElement & {
+      amount: { value: string };
+      wallet: { value: string };
+    };
+
+    const amount = form.amount.value;
+    const wallet = form.wallet.value.trim();
 
     fetch(
       `${serverAddress}/add-wallet`,
@@ -32,7 +37,6 @@ export const AddWallet = ({ setState }: AddWalletType) => {
       .then((res) => {
         toast.dismiss(toastId);
         setLoading(false);
-        reset();
         if (res.okay) {
           fetchWallets();
           setState(false);
@@ -47,19 +51,17 @@ export const AddWallet = ({ setState }: AddWalletType) => {
 
   return (
     <section>
-      <form onSubmit={handleSubmit(onAddWallet)} className='flex-down gap-5'>
+      <form onSubmit={onAddWallet} className='flex-down gap-5'>
         <div className='center-y gap-5'>
-          <FormInput
+          <Input
             name='wallet'
-            register={register}
             title='Wallet Name'
             type='string'
             placeholder='Enter the name of the wallet'
           />
 
-          <FormInput
+          <Input
             name='amount'
-            register={register}
             title='Initial Balance'
             type='number'
             placeholder='Enter initial balance'

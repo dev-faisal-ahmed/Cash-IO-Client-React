@@ -22,6 +22,7 @@ export function Input({
       </label>
       <input
         className='w-full rounded-md border border-gray-400 px-3 py-2 outline-none'
+        autoComplete='off'
         type={type}
         defaultValue={defaultValue}
         name={name}

@@ -36,7 +36,7 @@ export function TransactionModalForm({
 
   async function handleUpdateTransaction(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = event.target as typeof event.target & {
+    const form = event.target as HTMLFormElement & {
       amount: { value: string };
       description: { value: string };
     };

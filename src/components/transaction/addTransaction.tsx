@@ -39,9 +39,9 @@ export function AddTransaction({ setState }: AddTransactionType) {
   //  transaction handler
   async function handleAddTransaction(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = event.target as typeof event.target & {
-      amount: { value: string }; // this has to be a number
-      date: { value: string }; // this has to be a date
+    const form = event.target as HTMLFormElement & {
+      amount: { value: string };
+      date: { value: string };
       description: { value: string };
     };
 
