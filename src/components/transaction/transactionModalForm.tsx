@@ -1,10 +1,5 @@
-import { useState, Dispatch, SetStateAction } from 'react';
-import { useForm } from 'react-hook-form';
-import { StoreType, FromType, TransactionType } from '../../utils/types';
-import { FormInput } from '../input/formInput';
-import { FormOptionInput } from '../input/formOptionInput';
-import { FormComplexInput } from '../input/formComplexInput';
-import { FormTextArea } from '../input/formTextArea';
+import { useState, Dispatch, SetStateAction, FormEvent } from 'react';
+import { StoreType, TransactionType } from '../../utils/types';
 import { toast } from 'react-hot-toast';
 import { serverAddress } from '../../utils/serverAddress';
 import { serverReq } from '../../utils/serverReq';
@@ -12,7 +7,11 @@ import { useSelector } from 'react-redux';
 import { useGetTransaction } from '../../hooks/useGetTransaction';
 import { useGetWallets } from '../../hooks/useGetWallets';
 import { getWalletName } from '../../utils/helper';
-import { useGetCategory } from '../../hooks/useGetCategory';
+import { Input } from '../input/input';
+import { Select } from '../input/select';
+import { ComplexSelect } from '../input/complexSelect';
+import { categoriesData } from '../../data/categories';
+import { TextArea } from '../input/textArea';
 
 type TransactionModalFormComponentType = TransactionType & {
   setModalState: Dispatch<SetStateAction<boolean>>;
@@ -27,20 +26,30 @@ export function TransactionModalForm({
   wallet,
   setModalState,
 }: TransactionModalFormComponentType) {
-  const { register, handleSubmit, reset } = useForm<FromType>();
   const { email } = useSelector((state: StoreType) => state.user);
   const [loading, setLoading] = useState<boolean>(false);
   const { fetchTransactions } = useGetTransaction(email as string);
   const { fetchWallets, wallets } = useGetWallets(email as string);
-  const { categories } = useGetCategory();
+  const [selectedType, setSelectedType] = useState(type as string);
+  const [selectedWallet, setSelectedWallet] = useState(wallet);
+  const [selectedCategory, setSelectedCategory] = useState(category);
 
-  async function handleUpdateTransaction(data: FromType) {
+  async function handleUpdateTransaction(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.target as typeof event.target & {
+      amount: { value: string };
+      description: { value: string };
+    };
+
+    const formAmount = form.amount.value;
+    const formDescription = form.description.value;
+
     if (
-      +data.amount === amount &&
-      data.category === category &&
-      data.type === type &&
-      data.description.trim() === description &&
-      wallet === data.wallet
+      +formAmount === amount &&
+      selectedCategory === category &&
+      selectedType === type &&
+      formDescription.trim() === description &&
+      selectedWallet === wallet
     ) {
       toast.error('Nothing to update', { duration: 500 });
       return;
@@ -50,14 +59,14 @@ export function TransactionModalForm({
     const formData = {
       _id,
       email,
-      amount: +data.amount,
+      amount: parseInt(formAmount),
       prevAmount: amount,
-      type: data.type,
+      type: selectedType,
       prevType: type,
-      wallet: data.wallet,
+      wallet: selectedWallet,
       prevWallet: wallet,
-      category: data.category,
-      description: data.description.trim(),
+      category: selectedCategory,
+      description: formDescription.trim(),
     };
     try {
       const response = await fetch(
@@ -74,7 +83,6 @@ export function TransactionModalForm({
       toast.error('Something went wrong');
     }
 
-    reset();
     setLoading(false);
     toast.dismiss(toastId);
     setModalState(false);
@@ -82,48 +90,45 @@ export function TransactionModalForm({
 
   return (
     <form
-      onSubmit={handleSubmit(handleUpdateTransaction)}
+      onSubmit={handleUpdateTransaction}
       className='mt-8 flex flex-col gap-3'
     >
       <div className='flex items-center gap-5'>
-        <FormInput
+        <Input
           name='amount'
           placeholder='Enter Amount'
-          register={register}
           title={'Amount'}
           type='number'
           defaultValue={amount}
         />
-        <FormOptionInput
-          name='type'
+        <Select
           title='Transaction Type'
-          register={register}
-          defaultValue={type}
+          onSelection={(option: string) => setSelectedType(option)}
+          placeholder='Select Any'
+          selectedOption={selectedType}
           options={['revenue', 'expense']}
         />
       </div>
       <div className='flex items-center gap-5'>
-        <FormOptionInput
-          name='wallet'
+        <Select
           title='Wallet'
-          register={register}
-          defaultValue={wallet}
+          selectedOption={selectedWallet}
+          onSelection={(option: string) => setSelectedWallet(option)}
           options={getWalletName(wallets)}
+          placeholder='Select Any Wallet'
         />
-        <FormComplexInput
-          name='category'
+        <ComplexSelect
           title='Category'
-          placeholder='Enter Category'
-          options={categories as string[]}
-          register={register}
-          defaultValue={category}
+          onSelection={(option: string) => setSelectedCategory(option)}
+          options={categoriesData.expense}
+          placeholder='Select Category'
+          selectedOption={selectedCategory}
         />
       </div>
-      <FormTextArea
+      <TextArea
         name='description'
         title='Description'
         placeholder='Enter a short Description'
-        register={register}
         defaultValue={description as string}
       />
       <button disabled={loading} className='button-primary'>
